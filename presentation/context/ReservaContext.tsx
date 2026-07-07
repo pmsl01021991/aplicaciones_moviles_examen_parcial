@@ -7,7 +7,10 @@ import {
 } from "react";
 
 import { Reserva } from "../models/Reserva";
+import { ReservaTemporal } from "../models/ReservaTemporal";
+
 import { reservasMock } from "../data/reservasMock";
+
 import {
   reservaReducer,
   ReservaAction,
@@ -20,6 +23,12 @@ interface ReservaContextProps {
   platoSeleccionado: string;
 
   setPlatoSeleccionado: React.Dispatch<React.SetStateAction<string>>;
+
+  reservaTemporal: ReservaTemporal;
+
+  setReservaTemporal: React.Dispatch<
+    React.SetStateAction<ReservaTemporal>
+  >;
 
   dispatch: React.Dispatch<ReservaAction>;
 
@@ -44,15 +53,31 @@ export const ReservaProvider = ({
     reservasMock
   );
 
-  const [platoSeleccionado, setPlatoSeleccionado] = useState("");
+  const [platoSeleccionado, setPlatoSeleccionado] =
+    useState("");
+
+  const [reservaTemporal, setReservaTemporal] =
+  useState<ReservaTemporal>({
+    plato: "",
+    mesa: "",
+    fecha: "",
+    hora: "",
+    numero: "",
+    comensales: 1,
+  });
 
   return (
 
     <ReservaContext.Provider
       value={{
         reservas,
+
         platoSeleccionado,
         setPlatoSeleccionado,
+
+        reservaTemporal,
+        setReservaTemporal,
+
         dispatch,
       }}
     >

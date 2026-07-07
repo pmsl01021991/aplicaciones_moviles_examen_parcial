@@ -1,90 +1,280 @@
 import { useState } from "react";
-
 import {
   SafeAreaView,
-  View,
+  StyleSheet,
   Text,
   FlatList,
-  StyleSheet,
 } from "react-native";
 
-import { useRouter } from "expo-router";
-
-import SearchBar from "../presentation/components/shared/SearchBar";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
-import ReservaCard from "../presentation/components/Reserva/ReservaCard";
+import MesaCard from "../presentation/components/Reserva/MesaCard";
+import SeleccionFechaModal from "../presentation/components/Reserva/SeleccionFechaModal";
+import SeleccionHoraModal from "../presentation/components/Reserva/SeleccionHoraModal";
+import NumeroModal from "../presentation/components/Reserva/NumeroModal";
+import ComensalesModal from "../presentation/components/Reserva/ComensalesModal";
+import ResumenReservaModal from "../presentation/components/Reserva/ResumenReservaModal";
 
 import { useReserva } from "../presentation/context/ReservaContext";
+import { useUsuario } from "../presentation/context/UsuarioContext";
+import { mesasMock } from "../presentation/data/mesasMock";
 import { COLORS } from "../presentation/utils/color";
 
 export default function Reservas() {
-  const router = useRouter();
 
-  const { reservas } = useReserva();
+  const [mostrarTodas, setMostrarTodas] = useState(false);
 
-  const [buscar, setBuscar] = useState("");
+  const [mostrarModal, setMostrarModal] = useState(false);
 
-  const reservasFiltradas = reservas.filter((item) =>
-    item.cliente
-      .toLowerCase()
-      .includes(buscar.toLowerCase())
-  );
+  const [mostrarFecha,setMostrarFecha]=useState(false);
+
+  const [mostrarHora,setMostrarHora]=useState(false);
+
+  const [mostrarNumero,setMostrarNumero]=useState(false);
+
+  const [mostrarComensales,setMostrarComensales]=useState(false);
+
+  const [mostrarResumen,setMostrarResumen]=useState(false);
+
+  const { reservaTemporal,setReservaTemporal }=useReserva();
+
+  const { usuarioActual }=useUsuario();
+
+  const mesas = mostrarTodas
+    ? mesasMock
+    : mesasMock.slice(0, 4);
+
+  const seleccionarMesa=(nombre:string)=>{
+
+  setReservaTemporal({
+
+  ...reservaTemporal,
+
+  mesa:nombre
+
+  });
+
+setMostrarFecha(true);
+
+};
 
   return (
+
     <SafeAreaView style={styles.container}>
+
       <Text style={styles.title}>
+
         Reservaciones
+
       </Text>
 
-      <SearchBar
-        value={buscar}
-        onChangeText={setBuscar}
-      />
+      <Text style={styles.subtitle}>
 
-      <PrimaryButton
-        title="Nueva Reservación"
-        onPress={() =>
-          router.push("/crearReserva" as any)
-        }
-      />
+        Elige una mesa para comenzar tu reservación.
+
+      </Text>
 
       <FlatList
-        data={reservasFiltradas}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{
-          paddingTop: 20,
-          paddingBottom: 30,
-        }}
+
+        data={mesas}
+
+        keyExtractor={(item) => item.id.toString()}
+
+        numColumns={2}
+
+        columnWrapperStyle={styles.row}
+
+        contentContainerStyle={styles.list}
+
         renderItem={({ item }) => (
-          <ReservaCard
-            reserva={item}
-            onPress={() =>
-              router.push({
-                pathname: "/detalleReserva" as any,
-                params: {
-                  id: item.id,
-                },
-              })
-            }
+
+          <MesaCard
+
+            mesa={item}
+
+            onPress={() => seleccionarMesa(item.nombre)}
+
           />
+
         )}
+
       />
+
+      {
+
+        !mostrarTodas && (
+
+          <PrimaryButton
+
+            title="Mostrar más mesas"
+
+            onPress={() => setMostrarTodas(true)}
+
+            color={COLORS.secondary}
+
+          />
+
+        )
+
+      }
+
+      <SeleccionFechaModal
+
+      visible={mostrarFecha}
+
+      onCerrar={()=>setMostrarFecha(false)}
+
+      onContinuar={()=>{
+
+      setMostrarFecha(false);
+
+      setMostrarHora(true);
+
+      }}
+
+      />
+
+      <SeleccionHoraModal
+
+      visible={mostrarHora}
+
+      onCerrar={()=>{
+
+      setMostrarHora(false);
+
+      setMostrarFecha(true);
+
+      }}
+
+      onContinuar={()=>{
+
+      setMostrarHora(false);
+
+      setMostrarNumero(true);
+
+      }}
+
+      />
+
+      <NumeroModal
+
+      visible={mostrarNumero}
+
+      onCerrar={()=>{
+
+      setMostrarNumero(false);
+
+      setMostrarHora(true);
+
+      }}
+
+      onContinuar={()=>{
+
+      setMostrarNumero(false);
+
+      setMostrarComensales(true);
+
+      }}
+
+      />
+
+      <ComensalesModal
+
+      visible={mostrarComensales}
+
+      onCerrar={()=>{
+
+      setMostrarComensales(false);
+
+      setMostrarNumero(true);
+
+      }}
+
+      onContinuar={()=>{
+
+      setMostrarComensales(false);
+
+      setMostrarResumen(true);
+
+      }}
+
+      />
+
+      <ResumenReservaModal
+
+      visible={mostrarResumen}
+
+      usuario={usuarioActual?.correo ?? ""}
+
+      onCerrar={()=>{
+
+      setMostrarResumen(false);
+
+      setMostrarComensales(true);
+
+      }}
+
+      onConfirmar={()=>{
+
+      setMostrarResumen(false);
+
+      }}
+
+      />
+
     </SafeAreaView>
+
   );
+
 }
 
 const styles = StyleSheet.create({
+
   container: {
+
     flex: 1,
+
     backgroundColor: COLORS.background,
+
     padding: 18,
+
   },
 
   title: {
-    fontSize: 30,
+
+    fontSize: 32,
+
     color: COLORS.secondary,
+
     fontWeight: "bold",
-    marginBottom: 20,
+
     textAlign: "center",
+
+    marginTop: 10,
+
   },
+
+  subtitle: {
+
+    color: "#C4B5FD",
+
+    textAlign: "center",
+
+    fontSize: 16,
+
+    marginVertical: 20,
+
+  },
+
+  list: {
+
+    paddingBottom: 20,
+
+  },
+
+  row: {
+
+    justifyContent: "space-between",
+
+  },
+
 });
