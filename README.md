@@ -1,50 +1,170 @@
-# Welcome to your Expo app 👋
+# Restaurante El Buen Sabor - Aplicación Móvil
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Descripción del proyecto
 
-## Get started
+**Restaurante El Buen Sabor** es una aplicación móvil desarrollada en React Native que permite a los clientes consultar el menú del restaurante, registrarse, iniciar sesión y realizar el proceso de reservación de mesas.
 
-1. Install dependencies
+La aplicación también contempla un rol de administrador, el cual tendrá acceso a funcionalidades adicionales para la gestión de las reservaciones realizadas por los clientes.
 
-   ```bash
-   npm install
-   ```
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+# Core de negocio elegido
 
-In the output, you'll find options to open the app in a
+El core de negocio corresponde a la **gestión de reservaciones para un restaurante**, permitiendo:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Registro e inicio de sesión de clientes.
+- Consulta del menú del restaurante.
+- Selección de platos.
+- Reservación de mesas.
+- Administración de las reservaciones (rol Administrador).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+# Tecnologías utilizadas
 
-When you're ready, run:
+- React Native
+- Expo
+- TypeScript
+- Context API
+- React Navigation (Expo Router)
+- React Native DateTimePicker
+
+---
+
+# Requisitos
+
+Antes de ejecutar el proyecto es necesario tener instalado:
+
+- Node.js (versión LTS recomendada)
+- npm
+- JDK 17 o superior
+- Android Studio (para Android)
+
+o
+
+- Xcode (para macOS/iOS)
+
+Además se recomienda tener instalado:
+
+- Visual Studio Code
+- Expo Go (para pruebas en dispositivo físico)
+
+---
+
+# Instalación
+
+Clonar el repositorio.
+
+Luego ejecutar:
 
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Si el proyecto utiliza Expo:
 
-## Learn more
+```bash
+npx expo install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+# Ejecución
 
-## Join the community
+Iniciar el servidor de desarrollo:
 
-Join our community of developers creating universal apps.
+```bash
+npx run start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Para Android:
+
+```bash
+npx react-native run-android
+```
+
+o utilizando Expo:
+
+```bash
+npx expo start
+```
+
+Para iOS:
+
+```bash
+npx react-native run-ios
+```
+
+---
+
+# Flujo para probar el CRUD
+
+## Cliente
+
+1. Registrarse con una nueva cuenta.
+2. Iniciar sesión.
+3. Acceder al menú.
+4. Seleccionar un plato.
+5. Verificar el mensaje de confirmación del plato seleccionado.
+6. Ingresar a la sección **Reservaciones**.
+7. Seleccionar una mesa.
+8. Elegir la fecha.
+9. Elegir la hora.
+10. Ingresar el número de celular.
+11. Seleccionar la cantidad de comensales.
+12. Revisar el resumen de la reservación.
+13. Confirmar la reservación.
+
+---
+
+## Administrador
+
+1. Iniciar sesión con la cuenta de administrador.
+2. Acceder al submenú **Reservaciones Hechas**.
+3. Consultar las reservaciones registradas.
+4. Editar una reservación.
+5. Eliminar una reservación.
+
+---
+
+# Estructura del proyecto
+
+```
+app/
+presentation/
+ ├── components/
+ ├── context/
+ ├── data/
+ ├── hooks/
+ ├── models/
+ ├── reducer/
+ └── utils/
+assets/
+```
+
+---
+
+# Integrantes del grupo
+
+- Suyón Lescano Pablo
+- Godoy Palacios Joaquín
+- Muñoz Sharon
+
+---
+
+# Estado del proyecto
+
+Proyecto en desarrollo.
+
+Actualmente se encuentran implementados:
+
+- Registro de usuarios.
+- Inicio de sesión.
+- Navbar dinámico.
+- Menú de platos.
+- Selección de platos.
+- Flujo inicial de reservaciones.
+- Context API para usuarios y reservaciones.
+
+Las funcionalidades restantes serán incorporadas en las siguientes iteraciones del proyecto.
