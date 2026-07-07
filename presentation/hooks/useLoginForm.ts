@@ -6,18 +6,27 @@ export default function useLoginForm() {
 
   const [password, setPassword] = useState("");
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errors, setErrors] = useState({
+
     correo: "",
-    password: ""
+
+    password: "",
+
+    confirmPassword: ""
+
   });
 
-  const validar = () => {
+  const validarLogin = () => {
 
     const nuevosErrores = {
 
       correo: "",
 
-      password: ""
+      password: "",
+
+      confirmPassword: ""
 
     };
 
@@ -59,19 +68,67 @@ export default function useLoginForm() {
 
   };
 
+  const validarRegistro = () => {
+
+    if (!validarLogin()) return false;
+
+    const nuevosErrores = {
+
+      correo: "",
+
+      password: "",
+
+      confirmPassword: ""
+
+    };
+
+    let valido = true;
+
+    if (password.length < 6) {
+
+      nuevosErrores.password =
+
+        "Mínimo 6 caracteres";
+
+      valido = false;
+
+    }
+
+    if (password !== confirmPassword) {
+
+      nuevosErrores.confirmPassword =
+
+        "Las contraseñas no coinciden";
+
+      valido = false;
+
+    }
+
+    setErrors(nuevosErrores);
+
+    return valido;
+
+  };
+
   return {
 
     correo,
 
     password,
 
+    confirmPassword,
+
     setCorreo,
 
     setPassword,
 
+    setConfirmPassword,
+
     errors,
 
-    validar
+    validarLogin,
+
+    validarRegistro
 
   };
 

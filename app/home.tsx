@@ -1,62 +1,75 @@
+import { useState } from "react";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
+
 import {
   SafeAreaView,
-  View,
-  Text,
-  ImageBackground,
+  ScrollView,
   StyleSheet,
-  StatusBar,
 } from "react-native";
 
-import PrimaryButton from "../presentation/components/shared/PrimaryButton";
+import { StatusBar } from "expo-status-bar";
+
+import Navbar from "../presentation/components/shared/Navbar";
+import HeroSection from "../presentation/components/shared/HeroSection";
+import MenuHome from "../presentation/components/shared/MenuHome";
+import AuthenticationModal from "../presentation/components/Authentication/Authentication";
+import { useUsuario } from "../presentation/context/UsuarioContext";
+import Footer from "../presentation/components/shared/Footer";
+
 import { COLORS } from "../presentation/utils/color";
 
 export default function Home() {
 
   const router = useRouter();
 
+  const [mostrarLogin, setMostrarLogin] = useState(false);
+
+  const {usuarioActual,setUsuarioActual,} = useUsuario();
+
+  const [usuario, setUsuario] = useState(usuarioActual);
+
   return (
 
     <SafeAreaView style={styles.container}>
 
-      <StatusBar barStyle="light-content" />
+      <StatusBar style="light" />
 
-      <ImageBackground
-        source={require("../assets/images/fondo.png")}
-        style={styles.background}
+      <Navbar
+
+        usuario={usuarioActual}
+
+        onLogin={() => setMostrarLogin(true)}
+
+        onLogout={() => {setUsuarioActual(null); setUsuario(null);}}
+
+        onInicio={() => {}}
+
+        onMenu={() => router.push("/menu")}
+
+        onReservas={() => router.push("/reservas")}
+
+      />
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
       >
 
-        <View style={styles.overlay}>
+        <HeroSection />
 
-          <Text style={styles.title}>
-            RESTAURANTE
-          </Text>
+        <MenuHome />
 
-          <Text style={styles.title2}>
-            EL BUEN SABOR
-          </Text>
+        <Footer />
 
-          <Text style={styles.subtitle}>
-            Sabores auténticos que despiertan tus sentidos
-          </Text>
+      </ScrollView>
 
-          <View style={styles.buttons}>
+      <AuthenticationModal
 
-            <PrimaryButton
-              title="Ver Menú"
-              onPress={() => router.push("/menu" as any)}
-            />
+        visible={mostrarLogin}
 
-            <PrimaryButton
-              title="Reservaciones"
-              onPress={() => router.push("/reservas" as any)}
-            />
+        onClose={() => setMostrarLogin(false)}
 
-          </View>
-
-        </View>
-
-      </ImageBackground>
+      />
 
     </SafeAreaView>
 
@@ -70,78 +83,8 @@ const styles = StyleSheet.create({
 
     flex: 1,
 
-    backgroundColor: COLORS.background
+    backgroundColor: COLORS.background,
 
   },
-
-  background: {
-
-    flex: 1,
-
-    justifyContent: "center"
-
-  },
-
-  overlay: {
-
-    flex: 1,
-
-    justifyContent: "center",
-
-    alignItems: "center",
-
-    padding: 25,
-
-    backgroundColor: "rgba(0,0,0,0.60)"
-
-  },
-
-  title: {
-
-    color: COLORS.secondary,
-
-    fontSize: 38,
-
-    fontWeight: "bold",
-
-    textAlign: "center"
-
-  },
-
-  title2: {
-
-    color: COLORS.white,
-
-    fontSize: 32,
-
-    fontWeight: "bold",
-
-    textAlign: "center",
-
-    marginBottom: 15
-
-  },
-
-  subtitle: {
-
-    color: COLORS.gray,
-
-    fontSize: 18,
-
-    textAlign: "center",
-
-    marginBottom: 50,
-
-    lineHeight: 28
-
-  },
-
-  buttons: {
-
-    width: "100%",
-
-    gap: 15
-
-  }
 
 });

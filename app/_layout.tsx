@@ -4,38 +4,43 @@ import "../global.css";
 import { Stack } from "expo-router";
 
 import { ReservaProvider } from "../presentation/context/ReservaContext";
+import { UsuarioProvider } from "../presentation/context/UsuarioContext";
 
 export default function RootLayout() {
 
   return (
 
-    <ReservaProvider>
+    <UsuarioProvider>
 
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <ReservaProvider>
 
-        <Stack.Screen name="index" />
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
 
-        <Stack.Screen name="login" />
+          <Stack.Screen name="index" />
 
-        <Stack.Screen name="home" />
+          <Stack.Screen name="login" />
 
-        <Stack.Screen name="menu" />
+          <Stack.Screen name="home" />
 
-        <Stack.Screen name="reservas" />
+          <Stack.Screen name="menu" />
 
-        <Stack.Screen name="crearReserva" />
+          <Stack.Screen name="reservas" />
 
-        <Stack.Screen name="detalleReserva" />
+          <Stack.Screen name="crearReserva" />
 
-        <Stack.Screen name="editarReserva" />
+          <Stack.Screen name="detalleReserva" />
 
-      </Stack>
+          <Stack.Screen name="editarReserva" />
 
-    </ReservaProvider>
+        </Stack>
+
+      </ReservaProvider>
+
+    </UsuarioProvider>
 
   );
 

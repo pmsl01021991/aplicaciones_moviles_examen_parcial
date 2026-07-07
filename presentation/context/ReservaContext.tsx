@@ -2,19 +2,24 @@ import {
   createContext,
   useReducer,
   useContext,
-  ReactNode
+  ReactNode,
+  useState,
 } from "react";
 
 import { Reserva } from "../models/Reserva";
 import { reservasMock } from "../data/reservasMock";
 import {
   reservaReducer,
-  ReservaAction
+  ReservaAction,
 } from "../reducer/reservaReducer";
 
 interface ReservaContextProps {
 
   reservas: Reserva[];
+
+  platoSeleccionado: string;
+
+  setPlatoSeleccionado: React.Dispatch<React.SetStateAction<string>>;
 
   dispatch: React.Dispatch<ReservaAction>;
 
@@ -31,29 +36,25 @@ interface ProviderProps {
 }
 
 export const ReservaProvider = ({
-  children
+  children,
 }: ProviderProps) => {
 
   const [reservas, dispatch] = useReducer(
-
     reservaReducer,
-
     reservasMock
-
   );
+
+  const [platoSeleccionado, setPlatoSeleccionado] = useState("");
 
   return (
 
     <ReservaContext.Provider
-
       value={{
-
         reservas,
-
-        dispatch
-
+        platoSeleccionado,
+        setPlatoSeleccionado,
+        dispatch,
       }}
-
     >
 
       {children}
@@ -71,9 +72,7 @@ export const useReserva = () => {
   if (!context) {
 
     throw new Error(
-
       "useReserva debe usarse dentro de ReservaProvider"
-
     );
 
   }

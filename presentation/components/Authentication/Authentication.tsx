@@ -1,28 +1,25 @@
+import { Modal, View, StyleSheet } from "react-native";
 import { useState } from "react";
-import { useRouter } from "expo-router";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Alert,
-} from "react-native";
 
-import LoginForm from "../presentation/components/Login/LoginForm";
-import RegisterForm from "../presentation/components/Register/RegisterForm";
+import LoginForm from "../Login/LoginForm";
+import RegisterForm from "../Register/RegisterForm";
 
-import useLoginForm from "../presentation/hooks/useLoginForm";
+import useLoginForm from "../../hooks/useLoginForm";
+import { useUsuario } from "../../context/UsuarioContext";
 
-import { useUsuario } from "../presentation/context/UsuarioContext";
+interface Props {
+  visible: boolean;
+  onClose: () => void;
+}
 
-import { COLORS } from "../presentation/utils/color";
-
-export default function Login() {
-
-  const router = useRouter();
-
-  const {usuarios,usuarioActual,setUsuarioActual,dispatch,} = useUsuario();
+export default function AuthenticationModal({
+  visible,
+  onClose,
+}: Props) {
 
   const [mostrarRegistro, setMostrarRegistro] = useState(false);
+
+  const {usuarios,usuarioActual,setUsuarioActual,dispatch} = useUsuario();
 
   const {
 
@@ -41,7 +38,7 @@ export default function Login() {
 
   } = useLoginForm();
 
-  const ingresar = () => {
+  const login = () => {
 
     if (!validarLogin()) return;
 
@@ -55,39 +52,15 @@ export default function Login() {
 
     if (!usuario) {
 
-      Alert.alert(
+    alert("Correo o contraseña incorrectos.");
 
-        "Error",
-
-        "Correo o contraseña incorrectos."
-
-      );
-
-      return;
+    return;
 
     }
 
     setUsuarioActual(usuario);
 
-    Alert.alert(
-
-      "Bienvenido",
-
-      usuario.correo,
-
-      [
-
-        {
-
-          text: "Aceptar",
-
-          onPress: () => router.replace("/home")
-
-        }
-
-      ]
-
-    );
+    onClose();
 
   };
 
@@ -103,13 +76,7 @@ export default function Login() {
 
     if (existe) {
 
-      Alert.alert(
-
-        "Error",
-
-        "Ese correo ya está registrado."
-
-      );
+      alert("Ese correo ya existe.");
 
       return;
 
@@ -133,13 +100,7 @@ export default function Login() {
 
     });
 
-    Alert.alert(
-
-      "Correcto",
-
-      "Cuenta creada correctamente."
-
-    );
+    alert("Cuenta creada correctamente.");
 
     setMostrarRegistro(false);
 
@@ -153,7 +114,15 @@ export default function Login() {
 
   return (
 
-    <SafeAreaView style={styles.container}>
+    <Modal
+
+      visible={visible}
+
+      animationType="fade"
+
+      transparent
+
+    >
 
       <View style={styles.overlay}>
 
@@ -197,11 +166,11 @@ export default function Login() {
 
               errors={errors}
 
-              onLogin={ingresar}
+              onLogin={login}
 
               onRegister={() => setMostrarRegistro(true)}
 
-          />
+            />
 
           )
 
@@ -209,7 +178,7 @@ export default function Login() {
 
       </View>
 
-    </SafeAreaView>
+    </Modal>
 
   );
 
@@ -217,21 +186,15 @@ export default function Login() {
 
 const styles = StyleSheet.create({
 
-  container: {
+  overlay: {
 
     flex: 1,
 
     justifyContent: "center",
 
-    backgroundColor: COLORS.background,
+    padding: 20,
 
-    padding: 20
-
-  },
-
-  overlay: {
-
-    justifyContent: "center"
+    backgroundColor: "rgba(0,0,0,0.65)"
 
   }
 

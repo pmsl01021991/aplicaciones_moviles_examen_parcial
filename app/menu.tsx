@@ -1,13 +1,16 @@
 import {
-  SafeAreaView,
   FlatList,
-  View,
-  Text,
   Image,
-  StyleSheet
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity
 } from "react-native";
 
 import { COLORS } from "../presentation/utils/color";
+import { useReserva } from "../presentation/context/ReservaContext";
 
 const menu = [
 
@@ -19,7 +22,7 @@ const menu = [
 
     descripcion:"Deliciosa pasta con salsa cremosa.",
 
-    precio:"S/ 32.00",
+    precio:"S/ 30.00",
 
     imagen:require("../assets/images/pasta.jpeg")
 
@@ -47,7 +50,7 @@ const menu = [
 
     descripcion:"Jugosa carne a la parrilla con especias especiales.",
 
-    precio:"S/ 25.00",
+    precio:"S/ 28.00",
 
     imagen:require("../assets/images/carne.jpeg")
 
@@ -70,6 +73,22 @@ const menu = [
 ];
 
 export default function Menu(){
+
+  const { setPlatoSeleccionado } = useReserva();
+
+  const agregarPlato = (nombre: string) => {
+
+    setPlatoSeleccionado(nombre);
+
+    Alert.alert(
+
+      "Plato seleccionado",
+
+      `${nombre} fue agregado correctamente.`
+
+    );
+
+  };
 
 return(
 
@@ -118,6 +137,22 @@ style={styles.image}
 {item.precio}
 
 </Text>
+
+<TouchableOpacity
+
+  style={styles.button}
+
+  onPress={() => agregarPlato(item.nombre)}
+
+>
+
+  <Text style={styles.buttonText}>
+
+    Agregar
+
+  </Text>
+
+</TouchableOpacity>
 
 </View>
 
@@ -210,6 +245,30 @@ fontWeight:"bold",
 color:COLORS.secondary,
 
 margin:15
+
+},
+
+button:{
+
+backgroundColor:COLORS.secondary,
+
+margin:15,
+
+paddingVertical:12,
+
+borderRadius:10,
+
+alignItems:"center"
+
+},
+
+buttonText:{
+
+color:"#FFF",
+
+fontWeight:"bold",
+
+fontSize:16
 
 }
 
