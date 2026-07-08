@@ -8,11 +8,13 @@ import {
 
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import MesaCard from "../presentation/components/Reserva/MesaCard";
-import SeleccionFechaModal from "../presentation/components/Reserva/SeleccionFechaModal";
 import SeleccionHoraModal from "../presentation/components/Reserva/SeleccionHoraModal";
 import NumeroModal from "../presentation/components/Reserva/NumeroModal";
 import ComensalesModal from "../presentation/components/Reserva/ComensalesModal";
 import ResumenReservaModal from "../presentation/components/Reserva/ResumenReservaModal";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 import { useReserva } from "../presentation/context/ReservaContext";
 import { useUsuario } from "../presentation/context/UsuarioContext";
@@ -23,9 +25,9 @@ export default function Reservas() {
 
   const [mostrarTodas, setMostrarTodas] = useState(false);
 
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarCalendario, setMostrarCalendario] = useState(false);
 
-  const [mostrarFecha,setMostrarFecha]=useState(false);
+  const [fecha, setFecha] = useState(new Date());
 
   const [mostrarHora,setMostrarHora]=useState(false);
 
@@ -43,17 +45,17 @@ export default function Reservas() {
     ? mesasMock
     : mesasMock.slice(0, 4);
 
-  const seleccionarMesa=(nombre:string)=>{
+  const seleccionarMesa = (nombre: string) => {
 
   setReservaTemporal({
 
-  ...reservaTemporal,
+    ...reservaTemporal,
 
-  mesa:nombre
+    mesa: nombre,
 
   });
 
-setMostrarFecha(true);
+  setMostrarCalendario(true);
 
 };
 
@@ -99,6 +101,53 @@ setMostrarFecha(true);
 
       />
 
+      {mostrarCalendario && (
+
+  <DateTimePicker
+
+    value={fecha}
+
+    mode="date"
+
+    display="calendar"
+
+    minimumDate={new Date()}
+
+    onChange={(
+      event: DateTimePickerEvent,
+      selectedDate?: Date
+    ) => {
+
+      setMostrarCalendario(false);
+
+      if (event.type === "dismissed") {
+
+        return;
+
+      }
+
+      if (selectedDate) {
+
+        setFecha(selectedDate);
+
+        setReservaTemporal({
+
+          ...reservaTemporal,
+
+          fecha: selectedDate.toISOString().split("T")[0],
+
+        });
+
+        setMostrarHora(true);
+
+      }
+
+    }}
+
+  />
+
+)}
+
       {
 
         !mostrarTodas && (
@@ -117,22 +166,6 @@ setMostrarFecha(true);
 
       }
 
-      <SeleccionFechaModal
-
-      visible={mostrarFecha}
-
-      onCerrar={()=>setMostrarFecha(false)}
-
-      onContinuar={()=>{
-
-      setMostrarFecha(false);
-
-      setMostrarHora(true);
-
-      }}
-
-      />
-
       <SeleccionHoraModal
 
       visible={mostrarHora}
@@ -140,8 +173,6 @@ setMostrarFecha(true);
       onCerrar={()=>{
 
       setMostrarHora(false);
-
-      setMostrarFecha(true);
 
       }}
 

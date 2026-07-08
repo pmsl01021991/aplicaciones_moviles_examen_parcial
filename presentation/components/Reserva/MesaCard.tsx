@@ -8,6 +8,7 @@ import {
 
 import { Mesa } from "../../models/Mesa";
 import { COLORS } from "../../utils/color";
+import Footer from "../../../presentation/components/shared/Footer";
 
 interface Props {
 

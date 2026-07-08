@@ -10,7 +10,7 @@ import { useState } from "react";
 import PrimaryButton from "../shared/PrimaryButton";
 
 import { COLORS } from "../../utils/color";
-
+import { Picker } from "@react-native-picker/picker";
 import { useReserva } from "../../context/ReservaContext";
 
 interface Props {
@@ -97,25 +97,26 @@ export default function SeleccionHoraModal({
 
           </Text>
 
-          {horas.map((item) => (
+          <Picker
+            selectedValue={hora}
+            onValueChange={(itemValue) => setHora(itemValue)}
+            style={styles.picker}
+          >
 
-            <PrimaryButton
-
-              key={item}
-
-              title={item}
-
-              onPress={() => setHora(item)}
-
-              color={
-                hora === item
-                  ? COLORS.secondary
-                  : "#4B5563"
-              }
-
+            <Picker.Item
+              label="Seleccionar hora"
+              value=""
             />
 
-          ))}
+            {horas.map((item) => (
+              <Picker.Item
+                key={item}
+                label={item}
+                value={item}
+              />
+            ))}
+
+          </Picker>
 
           <PrimaryButton
 
@@ -191,4 +192,11 @@ const styles = StyleSheet.create({
 
   },
 
+  picker: {
+  backgroundColor: "#FFFFFF",
+  borderRadius: 8,
+  marginBottom: 20,
+},
+
 });
+
