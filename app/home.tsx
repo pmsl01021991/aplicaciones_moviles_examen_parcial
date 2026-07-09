@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
-import {SafeAreaView,ScrollView,StyleSheet,} from "react-native";
+import {SafeAreaView, StyleSheet, View, Text} from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Navbar from "../presentation/components/shared/Navbar";
-import HeroSection from "../presentation/components/shared/HeroSection";
-import MenuHome from "../presentation/components/shared/MenuHome";
-import AuthenticationModal from "../presentation/components/Authentication/Authentication";
 import { useUsuario } from "../presentation/context/UsuarioContext";
-import Footer from "../presentation/components/shared/Footer";
-
+import { Ionicons } from "@expo/vector-icons";
+import PrimaryButton from "../presentation/components/shared/PrimaryButton";
+import HomeCard from "../presentation/components/shared/HomeCard";
 import { COLORS } from "../presentation/utils/color";
 
 export default function Home() {
@@ -26,70 +22,124 @@ export default function Home() {
 
     <SafeAreaView style={styles.container}>
 
-      <StatusBar style="light" />
+    <View style={styles.header}>
 
-      <Navbar
+    <Ionicons
+    name="restaurant"
+    size={75}
+    color={COLORS.secondary}
+    />
 
-        usuario={usuarioActual}
+    <Text style={styles.title}>
+    Restaurante El Buen Sabor
+    </Text>
 
-        onLogin={() => setMostrarLogin(true)}
+    <Text style={styles.subtitle}>
 
-        onLogout={() => {
+    {
+    usuarioActual
+    ? `Hola ${usuarioActual.correo.split("@")[0]} 👋`
+    : "Bienvenido 👋"
+    }
 
-          setUsuarioActual(null);
+    </Text>
 
-          setUsuario(null);
+    <Text style={styles.question}>
+    ¿Qué deseas hacer hoy?
+    </Text>
 
-        }}
+    </View>
 
-        onInicio={() => {}}
+    <View style={styles.buttons}>
 
-        onMenu={() => router.push("/menu")}
+    <HomeCard
+    title="Menú"
+    subtitle="Descubre nuestros mejores platos"
+    icon="restaurant"
+    onPress={()=>router.push("/menu")}
+    />
 
-        onReservas={() => router.push("/reservas")}
+    <HomeCard
+    title="Reservar Mesa"
+    subtitle="Reserva en pocos segundos"
+    icon="calendar"
+    onPress={()=>router.push("/reservas")}
+    />
 
-        onReservacionesHechas={() =>
+    {
 
-          router.push("/reservacionesHechas")
+    usuarioActual?.rol==="admin" && (
 
-        }
+    <HomeCard
+    title="Reservaciones"
+    subtitle="Consultar reservaciones"
+    icon="clipboard"
+    onPress={()=>router.push("/reservacionesHechas")}
+    />
 
-      />
+    )
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
+    }
 
-        <HeroSection />
+    <HomeCard
+    title="Cerrar Sesión"
+    subtitle="Salir de la aplicación"
+    icon="log-out"
+    onPress={()=>{
 
-        <MenuHome />
+    setUsuarioActual(null);
 
-        <Footer />
+    router.replace("/login");
 
-      </ScrollView>
+    }}
+    />
 
-      <AuthenticationModal
-
-        visible={mostrarLogin}
-
-        onClose={() => setMostrarLogin(false)}
-
-      />
+    </View>
 
     </SafeAreaView>
 
-  );
+    );
 
 }
 
 const styles = StyleSheet.create({
 
-  container: {
-
-    flex: 1,
-
-    backgroundColor: COLORS.background,
-
+  container:{
+  flex:1,
+  backgroundColor:COLORS.background,
+  paddingHorizontal:22,
+  paddingTop:50
   },
+
+  header:{
+    alignItems:"center",
+    marginTop:10,
+    marginBottom:35
+  },
+
+  title:{
+    color:"#FFF",
+    fontSize:26,
+    fontWeight:"bold",
+    textAlign:"center",
+    marginTop:10
+  },
+
+  subtitle:{
+    fontSize:20,
+    fontWeight:"700",
+    color:COLORS.secondary,
+    marginTop:15
+  },
+
+  question:{
+    color:"#9CA3AF",
+    fontSize:16,
+    marginTop:8
+  },
+
+  buttons:{
+  marginTop:10
+  }
 
 });

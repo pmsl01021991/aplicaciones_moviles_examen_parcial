@@ -6,75 +6,107 @@ import {
   Text,
   View,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
+import { useState } from "react";
 
 import { COLORS } from "../presentation/utils/color";
 import { useReserva } from "../presentation/context/ReservaContext";
 
-const menu = [
+const MENU = {
 
-  {
+  comidas: [
 
-    id:"1",
+    {
+      id: "1",
+      nombre: "Pasta Carbonara",
+      descripcion: "Deliciosa pasta con salsa cremosa.",
+      precio: "S/ 30.00",
+      imagen: require("../assets/images/pasta.jpeg"),
+    },
 
-    nombre:"Pasta Carbonera",
+    {
+      id: "2",
+      nombre: "Pizza Margherita",
+      descripcion: "Pizza clásica italiana.",
+      precio: "S/ 28.00",
+      imagen: require("../assets/images/pizza.jpeg"),
+    },
 
-    descripcion:"Deliciosa pasta con salsa cremosa.",
+    {
+      id: "3",
+      nombre: "Carne Asada",
+      descripcion: "Jugosa carne a la parrilla.",
+      precio: "S/ 28.00",
+      imagen: require("../assets/images/carne.jpeg"),
+    },
 
-    precio:"S/ 30.00",
+    {
+      id: "4",
+      nombre: "Pollo Asado",
+      descripcion: "Pollo marinado al horno.",
+      precio: "S/ 36.00",
+      imagen: require("../assets/images/pollo.jpeg"),
+    },
 
-    imagen:require("../assets/images/pasta.jpeg")
+  ],
 
-  },
+  bebidas: [
 
-  {
+    {
+      id: "5",
+      nombre: "Coca Cola",
+      descripcion: "Botella 500ml",
+      precio: "S/ 5.00",
+      imagen: require("../assets/images/cocacola.jpg"),
+    },
 
-    id:"2",
+    {
+      id: "6",
+      nombre: "Inca Kola",
+      descripcion: "Botella 500ml",
+      precio: "S/ 5.00",
+      imagen: require("../assets/images/incakola.jpg"),
+    },
 
-    nombre:"Pizza Margherita",
+    {
+      id: "7",
+      nombre: "Chicha Morada",
+      descripcion: "Vaso grande",
+      precio: "S/ 8.00",
+      imagen: require("../assets/images/chichamorada.jpg"),
+    },
 
-    descripcion:"Pizza clásica con tomate, mozzarella y albahaca.",
+  ],
 
-    precio:"S/ 28.00",
+  postres: [
 
-    imagen:require("../assets/images/pizza.jpeg")
+    {
+      id: "8",
+      nombre: "Cheesecake",
+      descripcion: "Cheesecake de fresa.",
+      precio: "S/ 12.00",
+      imagen: require("../assets/images/cheesecake.jpg"),
+    },
 
-  },
+    {
+      id: "9",
+      nombre: "Tres Leches",
+      descripcion: "Pastel tres leches.",
+      precio: "S/ 10.00",
+      imagen: require("../assets/images/tresleches.jpg"),
+    },
 
-  {
+  ]
 
-    id:"3",
-
-    nombre:"Carne Asada",
-
-    descripcion:"Jugosa carne a la parrilla con especias especiales.",
-
-    precio:"S/ 28.00",
-
-    imagen:require("../assets/images/carne.jpeg")
-
-  },
-
-  {
-
-    id:"4",
-
-    nombre:"Pollo Asado",
-
-    descripcion:"Pollo marinado y asado a la perfección.",
-
-    precio:"S/ 36.00",
-
-    imagen:require("../assets/images/pollo.jpeg")
-
-  }
-
-];
+};
 
 export default function Menu(){
 
   const { platosSeleccionados, setPlatosSeleccionados } = useReserva();
+
+  const [categoria, setCategoria] = useState<"comidas" | "bebidas" | "postres"
+  >("comidas");
 
   const agregarPlato = (nombre: string) => {
 
@@ -111,15 +143,54 @@ return(
 
 <SafeAreaView style={styles.container}>
 
+<FlatList
+data={MENU[categoria]}
+
+ListHeaderComponent={
+
+<View>
+
 <Text style={styles.title}>
-
 Nuestro Menú
-
 </Text>
 
-<FlatList
+<View style={styles.categories}>
 
-data={menu}
+  <TouchableOpacity
+    style={[
+      styles.tab,
+      categoria === "comidas" && styles.tabActive,
+    ]}
+    onPress={() => setCategoria("comidas")}
+  >
+    <Text style={styles.tabText}>🍔 Comidas</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={[
+      styles.tab,
+      categoria === "bebidas" && styles.tabActive,
+    ]}
+    onPress={() => setCategoria("bebidas")}
+  >
+    <Text style={styles.tabText}>🥤 Bebidas</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={[
+      styles.tab,
+      categoria === "postres" && styles.tabActive,
+    ]}
+    onPress={() => setCategoria("postres")}
+  >
+    <Text style={styles.tabText}>🍰 Postres</Text>
+  </TouchableOpacity>
+
+</View>
+
+</View>
+
+}
 
 keyExtractor={(item)=>item.id}
 
@@ -185,108 +256,147 @@ style={styles.image}
 
 const styles=StyleSheet.create({
 
-container:{
+  container:{
 
-flex:1,
+  flex:1,
 
-backgroundColor:COLORS.background
+  backgroundColor:COLORS.background
 
-},
+  },
 
-title:{
+  title:{
 
-fontSize:30,
+  fontSize:30,
 
-fontWeight:"bold",
+  fontWeight:"bold",
 
-color:COLORS.secondary,
+  color:COLORS.secondary,
 
-textAlign:"center",
+  textAlign:"center",
 
-marginVertical:20
+  marginVertical:20
 
-},
+  },
 
-list:{
+  list:{
 
-padding:15
+  padding:15
 
-},
+  },
 
-card:{
+  card:{
 
-backgroundColor:"#FFF",
+  backgroundColor:"#FFF",
 
-borderRadius:15,
+  borderRadius:15,
 
-marginBottom:20,
+  marginBottom:20,
 
-overflow:"hidden"
+  overflow:"hidden"
 
-},
+  },
 
-image:{
+  image:{
 
-width:"100%",
+  width:"100%",
 
-height:200
+  height:200
 
-},
+  },
 
-nombre:{
+  nombre:{
 
-fontSize:20,
+  fontSize:20,
 
-fontWeight:"bold",
+  fontWeight:"bold",
 
-margin:15
+  margin:15
 
-},
+  },
 
-descripcion:{
+  descripcion:{
 
-fontSize:15,
+  fontSize:15,
 
-marginHorizontal:15,
+  marginHorizontal:15,
 
-color:"#555"
+  color:"#555"
 
-},
+  },
 
-precio:{
+  precio:{
 
-fontSize:18,
+  fontSize:18,
 
-fontWeight:"bold",
+  fontWeight:"bold",
 
-color:COLORS.secondary,
+  color:COLORS.secondary,
 
-margin:15
+  margin:15
 
-},
+  },
 
-button:{
+  button:{
 
-backgroundColor:COLORS.secondary,
+  backgroundColor:COLORS.secondary,
 
-margin:15,
+  margin:15,
 
-paddingVertical:12,
+  paddingVertical:12,
 
-borderRadius:10,
+  borderRadius:10,
 
-alignItems:"center"
+  alignItems:"center"
 
-},
+  },
 
-buttonText:{
+  buttonText:{
 
-color:"#FFF",
+  color:"#FFF",
 
-fontWeight:"bold",
+  fontWeight:"bold",
 
-fontSize:16
+  fontSize:16
 
-}
+  },
+
+  tabs:{
+
+  paddingHorizontal:15,
+
+  paddingBottom:20,
+
+  },
+
+  tab: {
+    flex: 1,
+    backgroundColor: "#374151",
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: "center",
+    marginHorizontal: 4,
+  },
+
+  tabActive:{
+
+  backgroundColor:COLORS.secondary,
+
+  },
+
+  tabText:{
+
+  color:"#FFF",
+
+  fontWeight:"bold",
+
+  fontSize:15,
+
+  },
+
+  categories: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
 
 });

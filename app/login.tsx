@@ -218,21 +218,15 @@ export default function Login() {
 const styles = StyleSheet.create({
 
   container: {
-
     flex: 1,
-
-    justifyContent: "center",
-
     backgroundColor: COLORS.background,
-
-    padding: 20
-
   },
 
   overlay: {
-
-    justifyContent: "center"
-
-  }
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 28,
+    paddingVertical: 20,
+  },
 
 });

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {SafeAreaView,StyleSheet,Text,FlatList, Alert} from "react-native";
+import {SafeAreaView,StyleSheet,Text,FlatList, Alert, TouchableOpacity, View} from "react-native";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import MesaCard from "../presentation/components/Reserva/MesaCard";
 import SeleccionHoraModal from "../presentation/components/Reserva/SeleccionHoraModal";
@@ -7,8 +7,8 @@ import NumeroModal from "../presentation/components/Reserva/NumeroModal";
 import ComensalesModal from "../presentation/components/Reserva/ComensalesModal";
 import ResumenReservaModal from "../presentation/components/Reserva/ResumenReservaModal";
 import DateTimePicker, {DateTimePickerEvent,} from "@react-native-community/datetimepicker";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import Navbar from "../presentation/components/shared/Navbar";
 import { useReserva } from "../presentation/context/ReservaContext";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { COLORS } from "../presentation/utils/color";
@@ -16,8 +16,6 @@ import { COLORS } from "../presentation/utils/color";
 export default function Reservas() {
 
   const router = useRouter();
-
-  const [mostrarTodas, setMostrarTodas] = useState(false);
 
   const [mostrarCalendario, setMostrarCalendario] = useState(false);
 
@@ -35,13 +33,7 @@ export default function Reservas() {
 
   const { usuarioActual }=useUsuario();
 
-const mesasMostrar =
-
-    mostrarTodas
-
-        ? mesas
-
-        : mesas.slice(0,4);
+  const mesasMostrar = mesas;
 
   const seleccionarMesa = (nombre: string) => {
 
@@ -83,30 +75,24 @@ const mesasMostrar =
 
     <SafeAreaView style={styles.container}>
 
-      <Navbar
+      <View style={styles.header}>
 
-          usuario={usuarioActual}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => router.back()}
+        >
+          <Ionicons
+            name="arrow-back"
+            size={28}
+            color="#FFF"
+          />
+        </TouchableOpacity>
 
-          onLogin={() => router.push("/login")}
+        <Text style={styles.title}>
+          Reservaciones
+        </Text>
 
-          onLogout={() => {}}
-
-          onInicio={() => router.push("/home")}
-
-          onMenu={() => router.push("/menu")}
-
-          onReservas={() => {}}
-
-          onReservacionesHechas={() => router.push("/reservacionesHechas")}
-
-        />
-
-
-      <Text style={styles.title}>
-
-        Reservaciones
-
-      </Text>
+      </View>
 
       <Text style={styles.subtitle}>
 
@@ -195,23 +181,6 @@ const mesasMostrar =
 
 )}
 
-      {
-
-        !mostrarTodas && (
-
-          <PrimaryButton
-
-            title="Mostrar más mesas"
-
-            onPress={() => setMostrarTodas(true)}
-
-            color={COLORS.secondary}
-
-          />
-
-        )
-
-      }
 
       <SeleccionHoraModal
 
@@ -317,20 +286,15 @@ const styles = StyleSheet.create({
 
   },
 
-  title: {
-
-    fontSize: 32,
-
-    color: COLORS.secondary,
-
-    fontWeight: "bold",
-
-    textAlign: "center",
-
-    marginTop: 20,
-
+  title:{
+    flex:1,
+    textAlign:"center",
+    fontSize:30,
+    fontWeight:"bold",
+    color:COLORS.secondary,
+    marginRight:45,
   },
-
+  
   subtitle: {
 
     color: "#C4B5FD",
@@ -343,6 +307,13 @@ const styles = StyleSheet.create({
 
   },
 
+  header:{
+    flexDirection:"row",
+    alignItems:"center",
+    marginTop:10,
+    marginBottom:20,
+  },
+
   list: {
 
     paddingBottom: 20,
@@ -353,6 +324,15 @@ const styles = StyleSheet.create({
 
     justifyContent: "space-between",
 
+  },
+
+  backButton:{
+      width:45,
+      height:45,
+      borderRadius:22,
+      backgroundColor:"#1F2937",
+      justifyContent:"center",
+      alignItems:"center",
   },
 
 });

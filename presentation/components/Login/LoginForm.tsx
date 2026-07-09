@@ -32,18 +32,30 @@ export default function LoginForm({
   onRegister,
 }: Props) {
   return (
-    <View style={styles.card}>
-      <View style={styles.iconContainer}>
-        <Ionicons
-          name="restaurant"
-          size={30}
-          color="#FFF"
-        />
-      </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
 
-      <Text style={styles.title}>
-        Iniciar Sesión
-      </Text>
+        <View style={styles.iconContainer}>
+          <Ionicons
+            name="restaurant"
+            size={60}
+            color="#FFFFFF"
+          />
+        </View>
+
+        <Text style={styles.restaurant}>
+          Restaurante
+        </Text>
+
+        <Text style={styles.title}>
+          El Buen Sabor
+        </Text>
+
+        <Text style={styles.subtitle}>
+          Bienvenido nuevamente
+        </Text>
+
+      </View>
 
       <CustomTextInput
         label="Correo Electrónico"
@@ -69,63 +81,75 @@ export default function LoginForm({
       />
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          ¿No tienes cuenta?
-        </Text>
 
-        <TouchableOpacity onPress={onRegister}>
-          <Text style={styles.link}>
-            Regístrate aquí
+          <Text style={styles.footerText}>
+              ¿No tienes cuenta?
           </Text>
-        </TouchableOpacity>
+
+          <TouchableOpacity onPress={onRegister}>
+              <Text style={styles.link}>
+                  Crear una cuenta
+              </Text>
+          </TouchableOpacity>
+
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#1F2937",
-    borderRadius: 12,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: "#374151",
-  },
+  container:{
+   flex:1,
+   justifyContent:"center"
+},
 
   iconContainer: {
-    width: 65,
-    height: 65,
-    borderRadius: 40,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     backgroundColor: COLORS.secondary,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    marginBottom: 15,
+    marginBottom: 18,
+    elevation: 8,
   },
 
   title: {
-    color: "#FFF",
-    fontSize: 26,
+    color: COLORS.secondary,
+    fontSize: 36,
     fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 25,
+  },
+
+  header: {
+  alignItems: "center",
+  marginBottom: 35,
+},
+
+restaurant: {
+  color: "#FFFFFF",
+  fontSize: 20,
+  letterSpacing: 2,
+},
+
+subtitle: {
+  color: "#D1D5DB",
+  fontSize: 16,
+  marginTop: 8,
+},
+
+  link: {
+    color: COLORS.secondary,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 
   footer: {
-    flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
-    flexWrap: "wrap",
+    marginTop: 30,
   },
 
   footerText: {
     color: "#9CA3AF",
-  },
-
-  link: {
-    color: COLORS.secondary,
-    fontWeight: "600",
-    marginLeft: 5,
+    marginBottom: 8,
   },
 });

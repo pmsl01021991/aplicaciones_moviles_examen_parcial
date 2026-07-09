@@ -130,13 +130,15 @@ const styles = StyleSheet.create({
 
     paddingHorizontal: 14,
 
-    paddingVertical: 12,
+    paddingVertical: 16,
 
     borderWidth: 1,
 
     borderColor: COLORS.border,
 
-    color: COLORS.white
+    color: COLORS.white,
+
+    fontSize: 16
 
   },
 
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
 
     marginTop: 5,
 
-    fontSize: 13
+    fontSize: 17
 
   }
 
