@@ -24,11 +24,40 @@ El core de negocio corresponde a la **gestión de reservaciones para un restaura
 # Tecnologías utilizadas
 
 - React Native
-- Expo
+- Expo SDK 54
 - TypeScript
+- Expo Router
 - Context API
-- React Navigation (Expo Router)
+- useReducer
+- NativeWind (Tailwind CSS para React Native)
+
+## Librerías utilizadas
+
+- @react-native-community/datetimepicker
+- @react-native-picker/picker
+- react-native-calendars
+- react-native-safe-area-context
+- react-native-reanimated
+- react-native-screens
+- react-native-gesture-handler
+- react-native-svg
+- expo-router
+- expo-status-bar
+
+# Librerías principales
+
+- Expo Router
+- React Navigation
+- React Native Calendars
 - React Native DateTimePicker
+- React Native Picker
+- React Native Safe Area Context
+- React Native Gesture Handler
+- React Native Reanimated
+- Expo Vector Icons
+- Expo Status Bar
+- NativeWind
+
 
 ---
 
@@ -54,15 +83,19 @@ Además se recomienda tener instalado:
 
 # Instalación
 
-Clonar el repositorio.
+Clonar el repositorio:
 
-Luego ejecutar:
+```bash
+git clone <url-del-repositorio>
+```
+
+Instalar dependencias:
 
 ```bash
 npm install
 ```
 
-Si el proyecto utiliza Expo:
+En caso de ser necesario instalar las dependencias de Expo:
 
 ```bash
 npx expo install
@@ -153,18 +186,81 @@ assets/
 
 ---
 
-# Estado del proyecto
+Estado del proyecto
+Funcionalidades implementadas
+Autenticación
+Registro de usuarios.
+Inicio de sesión.
+Cierre de sesión.
+Manejo de roles (Administrador y Cliente).
+Navbar dinámico según el usuario autenticado.
+Menú
+Visualización del menú de platos.
+Selección de uno o varios platos.
+Confirmación visual al agregar platos a la reservación.
+Reservaciones
+Selección de mesa.
+Validación de inicio de sesión antes de reservar.
+Validación de selección de platos antes de reservar.
+Selección de fecha mediante calendario.
+Selección de hora mediante lista desplegable.
+Validación de horarios ocupados por mesa.
+Ingreso del número de celular.
+Selección de cantidad de comensales.
+Resumen completo de la reservación.
+Confirmación de la reservación.
+Limpieza automática del formulario al finalizar la reservación.
+Actualización visual del estado de disponibilidad de las mesas.
+Visualización de las primeras reservaciones registradas por cada mesa.
+Administrador
+Acceso exclusivo al submenú Reservaciones Hechas.
+Calendario para consultar reservaciones por fecha.
+Visualización de las reservaciones registradas.
+Arquitectura
+Context API para usuarios.
+Context API para reservaciones.
+useReducer para el CRUD de reservaciones.
+Navegación mediante Expo Router.
+Componentes reutilizables.
+Datos simulados mediante archivos Mock.
+Funcionalidades pendientes
+Edición de reservaciones.
+Eliminación de reservaciones.
+Actualización automática de la lista del administrador al crear nuevas reservaciones.
+Filtro completo de reservaciones por fecha.
+Persistencia de datos (opcional, según la rúbrica).
+Mejoras visuales para la interfaz del administrador.
+Flujo implementado
+Cliente
 
-Proyecto en desarrollo.
+✔ Registro
 
-Actualmente se encuentran implementados:
+✔ Inicio de sesión
 
-- Registro de usuarios.
-- Inicio de sesión.
-- Navbar dinámico.
-- Menú de platos.
-- Selección de platos.
-- Flujo inicial de reservaciones.
-- Context API para usuarios y reservaciones.
+✔ Selección de platos
 
-Las funcionalidades restantes serán incorporadas en las siguientes iteraciones del proyecto.
+✔ Selección de mesa
+
+✔ Selección de fecha
+
+✔ Selección de hora
+
+✔ Número de celular
+
+✔ Comensales
+
+✔ Resumen
+
+✔ Confirmación
+
+Administrador
+
+✔ Inicio de sesión
+
+✔ Acceso al panel de Reservaciones Hechas
+
+✔ Consulta mediante calendario
+
+🔄 Edición (pendiente)
+
+🔄 Eliminación (pendiente)
