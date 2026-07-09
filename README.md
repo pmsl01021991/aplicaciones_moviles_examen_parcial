@@ -1,28 +1,28 @@
 # Restaurante El Buen Sabor - Aplicación Móvil
-
+ 
 ## Descripción del proyecto
-
+ 
 **Restaurante El Buen Sabor** es una aplicación móvil desarrollada en React Native que permite a los clientes consultar el menú del restaurante, registrarse, iniciar sesión y realizar el proceso de reservación de mesas.
-
+ 
 La aplicación también contempla un rol de administrador, el cual tendrá acceso a funcionalidades adicionales para la gestión de las reservaciones realizadas por los clientes.
-
-
+ 
+ 
 ---
-
+ 
 # Core de negocio elegido
-
+ 
 El core de negocio corresponde a la **gestión de reservaciones para un restaurante**, permitiendo:
-
+ 
 - Registro e inicio de sesión de clientes.
 - Consulta del menú del restaurante.
 - Selección de platos.
 - Reservación de mesas.
 - Administración de las reservaciones (rol Administrador).
-
+ 
 ---
-
+ 
 # Tecnologías utilizadas
-
+ 
 - React Native
 - Expo SDK 54
 - TypeScript
@@ -30,9 +30,8 @@ El core de negocio corresponde a la **gestión de reservaciones para un restaura
 - Context API
 - useReducer
 - NativeWind (Tailwind CSS para React Native)
-
+ 
 ## Librerías utilizadas
-
 - @react-native-community/datetimepicker
 - @react-native-picker/picker
 - react-native-calendars
@@ -44,7 +43,9 @@ El core de negocio corresponde a la **gestión de reservaciones para un restaura
 - expo-router
 - expo-status-bar
 
+ 
 # Librerías principales
+ 
 
 - Expo Router
 - React Navigation
@@ -58,29 +59,28 @@ El core de negocio corresponde a la **gestión de reservaciones para un restaura
 - Expo Status Bar
 - NativeWind
 
-
 ---
-
+ 
 # Requisitos
-
+ 
 Antes de ejecutar el proyecto es necesario tener instalado:
-
+ 
 - Node.js (versión LTS recomendada)
 - npm
 - JDK 17 o superior
 - Android Studio (para Android)
-
+ 
 o
-
+ 
 - Xcode (para macOS/iOS)
-
+ 
 Además se recomienda tener instalado:
-
+ 
 - Visual Studio Code
 - Expo Go (para pruebas en dispositivo físico)
-
+ 
 ---
-
+ 
 # Instalación
 
 Clonar el repositorio:
@@ -97,44 +97,59 @@ npm install
 
 En caso de ser necesario instalar las dependencias de Expo:
 
+ 
+Clonar el repositorio:
+ 
+```bash
+git clone <url-del-repositorio>
+```
+ 
+Instalar dependencias:
+ 
+```bash
+npm install
+```
+ 
+En caso de ser necesario instalar las dependencias de Expo:
+ 
 ```bash
 npx expo install
 ```
-
+ 
 ---
-
+ 
 # Ejecución
-
+ 
 Iniciar el servidor de desarrollo:
-
+ 
 ```bash
 npx run start
 ```
-
+ 
 Para Android:
-
+ 
 ```bash
 npx react-native run-android
 ```
-
+ 
 o utilizando Expo:
-
+ 
 ```bash
 npx expo start
 ```
-
+ 
 Para iOS:
-
+ 
 ```bash
 npx react-native run-ios
 ```
-
+ 
 ---
-
+ 
 # Flujo para probar el CRUD
-
+ 
 ## Cliente
-
+ 
 1. Registrarse con una nueva cuenta.
 2. Iniciar sesión.
 3. Acceder al menú.
@@ -148,21 +163,21 @@ npx react-native run-ios
 11. Seleccionar la cantidad de comensales.
 12. Revisar el resumen de la reservación.
 13. Confirmar la reservación.
-
+ 
 ---
-
+ 
 ## Administrador
-
+ 
 1. Iniciar sesión con la cuenta de administrador.
 2. Acceder al submenú **Reservaciones Hechas**.
 3. Consultar las reservaciones registradas.
 4. Editar una reservación.
 5. Eliminar una reservación.
-
+ 
 ---
-
+ 
 # Estructura del proyecto
-
+ 
 ```
 app/
 presentation/
@@ -175,18 +190,18 @@ presentation/
  └── utils/
 assets/
 ```
-
+ 
 ---
-
+ 
 # Integrantes del grupo
-
+ 
 - Suyón Lescano Pablo
 - Godoy Palacios Joaquín
 - Muñoz Sharon
-
+ 
 ---
 
-Estado del proyecto
+# Estado del proyecto
 Funcionalidades implementadas
 Autenticación
 Registro de usuarios.
@@ -262,5 +277,35 @@ Administrador
 ✔ Consulta mediante calendario
 
 🔄 Edición (pendiente)
-
+ 
+✔ Registro
+ 
+✔ Inicio de sesión
+ 
+✔ Selección de platos
+ 
+✔ Selección de mesa
+ 
+✔ Selección de fecha
+ 
+✔ Selección de hora
+ 
+✔ Número de celular
+ 
+✔ Comensales
+ 
+✔ Resumen
+ 
+✔ Confirmación
+ 
+Administrador
+ 
+✔ Inicio de sesión
+ 
+✔ Acceso al panel de Reservaciones Hechas
+ 
+✔ Consulta mediante calendario
+ 
+🔄 Edición (pendiente)
+ 
 🔄 Eliminación (pendiente)
