@@ -121,7 +121,7 @@ export default function Menu(){
 
     }
 
-    setPlatosSeleccionados([
+    setPlatosSeleccionados([// agrega el plato seleccionado al arreglo de platosseleccionados
 
       ...platosSeleccionados,
 
