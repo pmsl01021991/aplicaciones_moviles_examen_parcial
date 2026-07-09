@@ -169,11 +169,19 @@ const mesasMostrar =
 
         setFecha(selectedDate);
 
+        const año = selectedDate.getFullYear();
+
+        const mes = String(selectedDate.getMonth() + 1).padStart(2, "0");
+
+        const dia = String(selectedDate.getDate()).padStart(2, "0");
+
+        const fechaFormateada = `${año}-${mes}-${dia}`;
+
         setReservaTemporal({
 
           ...reservaTemporal,
 
-          fecha: selectedDate.toISOString().split("T")[0],
+          fecha: fechaFormateada,
 
         });
 
