@@ -5,10 +5,10 @@ import {
   StyleSheet,
 } from "react-native";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PrimaryButton from "../shared/PrimaryButton";
-
+import { Picker } from "@react-native-picker/picker";
 import { COLORS } from "../../utils/color";
 
 import { useReserva } from "../../context/ReservaContext";
@@ -56,6 +56,16 @@ export default function ComensalesModal({
 
   const [comensales, setComensales] = useState(0);
 
+  useEffect(() => {
+
+    if (visible) {
+
+      setComensales(0);
+
+    }
+
+  }, [visible]);
+
   const continuar = () => {
 
     if (!comensales) return;
@@ -75,13 +85,10 @@ export default function ComensalesModal({
   return (
 
     <Modal
-
       visible={visible}
-
       transparent
-
       animationType="fade"
-
+      onShow={() => setComensales(0)}
     >
 
       <View style={styles.overlay}>
@@ -94,25 +101,28 @@ export default function ComensalesModal({
 
           </Text>
 
-          {personas.map((item) => (
+          <Picker
+            selectedValue={comensales}
+            onValueChange={(itemValue) => setComensales(Number(itemValue))}
+            style={styles.picker}
+          >
 
-            <PrimaryButton
-
-              key={item}
-
-              title={`${item} ${Number(item) === 1 ? "persona" : "personas"}`}
-
-              onPress={() => setComensales(Number(item))}
-
-              color={
-                comensales === Number(item)
-                  ? COLORS.secondary
-                  : "#4B5563"
-              }
-
+            <Picker.Item
+              label="Seleccionar número de personas"
+              value={0}
             />
 
-          ))}
+            {personas.map((item) => (
+
+              <Picker.Item
+                key={item}
+                label={`${item} ${Number(item) === 1 ? "persona" : "personas"}`}
+                value={Number(item)}
+              />
+
+            ))}
+
+          </Picker>
 
           <PrimaryButton
 
@@ -186,6 +196,12 @@ const styles = StyleSheet.create({
 
     marginBottom: 20,
 
+  },
+
+  picker: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 8,
+    marginBottom: 20,
   },
 
 });

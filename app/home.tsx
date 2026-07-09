@@ -1,15 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-
+import {SafeAreaView,ScrollView,StyleSheet,} from "react-native";
 import { StatusBar } from "expo-status-bar";
-
 import Navbar from "../presentation/components/shared/Navbar";
 import HeroSection from "../presentation/components/shared/HeroSection";
 import MenuHome from "../presentation/components/shared/MenuHome";
@@ -41,13 +34,25 @@ export default function Home() {
 
         onLogin={() => setMostrarLogin(true)}
 
-        onLogout={() => {setUsuarioActual(null); setUsuario(null);}}
+        onLogout={() => {
+
+          setUsuarioActual(null);
+
+          setUsuario(null);
+
+        }}
 
         onInicio={() => {}}
 
         onMenu={() => router.push("/menu")}
 
         onReservas={() => router.push("/reservas")}
+
+        onReservacionesHechas={() =>
+
+          router.push("/reservacionesHechas")
+
+        }
 
       />
 

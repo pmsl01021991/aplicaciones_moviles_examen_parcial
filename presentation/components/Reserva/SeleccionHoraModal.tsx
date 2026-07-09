@@ -1,14 +1,6 @@
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
-
-import { useState } from "react";
-
+import {Modal,View,Text,StyleSheet,Alert} from "react-native";
+import { useEffect, useState } from "react";
 import PrimaryButton from "../shared/PrimaryButton";
-
 import { COLORS } from "../../utils/color";
 import { Picker } from "@react-native-picker/picker";
 import { useReserva } from "../../context/ReservaContext";
@@ -55,13 +47,55 @@ export default function SeleccionHoraModal({
 
     setReservaTemporal,
 
+    mesas,
+
   } = useReserva();
 
   const [hora, setHora] = useState("");
 
+  useEffect(() => {
+
+    if (visible) {
+
+      setHora("");
+
+    }
+
+  }, [visible]);
+
   const continuar = () => {
 
-    if (!hora) return;
+    if (!hora) {
+
+      Alert.alert(
+        "Seleccione una hora",
+        "Debe seleccionar un horario."
+      );
+
+      return;
+
+    }
+
+    const mesa = mesas.find(
+      m => m.nombre === reservaTemporal.mesa
+    );
+
+    const ocupado = mesa?.reservas.some(
+      reserva =>
+        reserva.fecha === reservaTemporal.fecha &&
+        reserva.hora === hora
+    );
+
+    if (ocupado) {
+
+      Alert.alert(
+        "Horario no disponible",
+        "Ese horario ya está reservado."
+      );
+
+      return;
+
+    }
 
     setReservaTemporal({
 
@@ -78,8 +112,8 @@ export default function SeleccionHoraModal({
   return (
 
     <Modal
-
       visible={visible}
+      onShow={() => setHora("")}
 
       transparent
 
@@ -108,13 +142,34 @@ export default function SeleccionHoraModal({
               value=""
             />
 
-            {horas.map((item) => (
-              <Picker.Item
-                key={item}
-                label={item}
-                value={item}
-              />
-            ))}
+            {horas.map((item) => {
+
+              const mesa = mesas.find(
+                m => m.nombre === reservaTemporal.mesa
+              );
+
+              const ocupado = mesa?.reservas.some(
+                reserva =>
+                  reserva.fecha === reservaTemporal.fecha &&
+                  reserva.hora === item
+              );
+
+              return (
+
+                <Picker.Item
+                  key={item}
+                  label={
+                    ocupado
+                      ? `${item} (Reservado)`
+                      : item
+                  }
+                  value={item}
+                  enabled={!ocupado}
+                />
+
+              );
+
+            })}
 
           </Picker>
 

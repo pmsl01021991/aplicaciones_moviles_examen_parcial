@@ -37,11 +37,95 @@ export default function ResumenReservaModal({
 
   const {
 
-    reservaTemporal,
+  reservaTemporal,
+  setReservaTemporal,
+  platosSeleccionados,
+  setPlatosSeleccionados,
+  mesas,
+  setMesas,
+  dispatch
 
-  } = useReserva();
+} = useReserva();
+  
 
   const confirmar = () => {
+
+    const nuevasMesas = mesas.map((mesa) => {
+
+      if (mesa.nombre !== reservaTemporal.mesa) {
+
+        return mesa;
+
+      }
+
+      return {
+
+        ...mesa,
+
+        reservas: [
+
+          ...mesa.reservas,
+
+          {
+
+            nombre: usuario.split("@")[0],
+
+            fecha: reservaTemporal.fecha,
+
+            hora: reservaTemporal.hora,
+
+          }
+
+        ]
+
+      };
+
+    });
+
+    
+
+    setMesas(nuevasMesas);
+
+    dispatch({
+
+      type: "ADD",
+
+      payload: {
+
+        id: Date.now().toString(),
+
+        cliente: usuario.split("@")[0],
+
+        telefono: reservaTemporal.numero,
+
+        mesa: reservaTemporal.mesa,
+
+        plato: platosSeleccionados.join(", "),
+
+        comensales: reservaTemporal.comensales,
+
+        prioridad: "MEDIA",
+
+        estado: "PENDIENTE",
+
+        fecha: reservaTemporal.fecha,
+
+        hora: reservaTemporal.hora,
+
+      }
+
+    });
+
+    setPlatosSeleccionados([]);
+
+    setReservaTemporal({
+      plato: "",
+      mesa: "",
+      fecha: "",
+      hora: "",
+      numero: "",
+      comensales: 1,
+    });
 
     Alert.alert(
 
@@ -57,7 +141,7 @@ export default function ResumenReservaModal({
 
           onPress: onConfirmar,
 
-        },
+        }
 
       ]
 
@@ -90,22 +174,51 @@ export default function ResumenReservaModal({
           <Text style={styles.texto}>
 
             <Text style={styles.bold}>
-              Nombre:
+                Nombre:
             </Text>{" "}
 
-            {usuario}
+            {usuario.split("@")[0]}
 
-          </Text>
+        </Text>
 
           <Text style={styles.texto}>
 
             <Text style={styles.bold}>
-              Plato seleccionado:
-            </Text>{" "}
+                Platos:
+            </Text>
 
-            {reservaTemporal.plato || "Ninguno"}
+        </Text>
 
-          </Text>
+        {
+
+            platosSeleccionados.length === 0 ?
+
+            (
+
+                <Text style={styles.texto}>
+
+                    Ninguno
+
+                </Text>
+
+            )
+
+            :
+
+            platosSeleccionados.map((plato,index)=>(
+
+                <Text
+                    key={index}
+                    style={styles.texto}
+                >
+
+                    • {plato}
+
+                </Text>
+
+            ))
+
+        }
 
           <Text style={styles.texto}>
 

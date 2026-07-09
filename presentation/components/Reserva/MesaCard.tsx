@@ -106,7 +106,7 @@ export default function MesaCard({
 
                 <Text style={styles.badgeText}>
 
-                  {reserva.nombre}
+                  {reserva.nombre} - {reserva.fecha} - {reserva.hora}
 
                 </Text>
 
@@ -210,23 +210,31 @@ const styles = StyleSheet.create({
 
   badge: {
 
-    backgroundColor: "#374151",
+      backgroundColor: "#374151",
 
-    borderRadius: 6,
+      borderRadius: 6,
 
-    paddingHorizontal: 8,
+      paddingHorizontal: 8,
 
-    paddingVertical: 4,
+      paddingVertical: 5,
 
-    marginTop: 4,
+      marginTop: 4,
+
+      width: "88%",
+
+      alignItems: "center",
 
   },
 
   badgeText: {
 
-    color: "#FFF",
+      color: "#FFF",
 
-    fontSize: 11,
+      fontSize: 10,
+
+      textAlign: "center",
+
+      lineHeight: 14,
 
   },
 

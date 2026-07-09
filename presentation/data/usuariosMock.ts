@@ -12,6 +12,13 @@ export const usuariosMock: Usuario[] = [
 
     rol: "admin"
 
-  }
+  },
+
+  {
+    id: "2",
+    correo: "pablo@gmail.com",
+    password: "pmsl123",
+    rol: "cliente",
+  },
 
 ];

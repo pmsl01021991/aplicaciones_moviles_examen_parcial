@@ -11,7 +11,8 @@ export const reservasMock: Reserva[] = [
     comensales: 2,
     prioridad: "ALTA",
     estado: "PENDIENTE",
-    fechaRegistro: "05/07/2026"
+    fecha: "2026-07-05",
+    hora: "12:00"
   },
 
   {
@@ -23,7 +24,8 @@ export const reservasMock: Reserva[] = [
     comensales: 4,
     prioridad: "MEDIA",
     estado: "EN_PROCESO",
-    fechaRegistro: "05/07/2026"
+    fecha: "2026-07-05",
+    hora: "12:00"
   },
 
   {
@@ -35,7 +37,8 @@ export const reservasMock: Reserva[] = [
     comensales: 3,
     prioridad: "BAJA",
     estado: "FINALIZADO",
-    fechaRegistro: "05/07/2026"
+    fecha: "2026-07-05",
+    hora: "12:00"
   }
 
 ];

@@ -74,11 +74,28 @@ const menu = [
 
 export default function Menu(){
 
-  const { setPlatoSeleccionado } = useReserva();
+  const { platosSeleccionados, setPlatosSeleccionados } = useReserva();
 
   const agregarPlato = (nombre: string) => {
 
-    setPlatoSeleccionado(nombre);
+    if (platosSeleccionados.includes(nombre)) {
+
+      Alert.alert(
+        "Información",
+        "Ese plato ya fue agregado."
+      );
+
+      return;
+
+    }
+
+    setPlatosSeleccionados([
+
+      ...platosSeleccionados,
+
+      nombre
+
+    ]);
 
     Alert.alert(
 

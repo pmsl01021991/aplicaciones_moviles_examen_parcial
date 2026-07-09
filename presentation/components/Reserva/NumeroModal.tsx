@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "react-native";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PrimaryButton from "../shared/PrimaryButton";
 
@@ -44,6 +44,16 @@ export default function NumeroModal({
 
   const [numero, setNumero] = useState("");
 
+  useEffect(() => {
+
+    if (visible) {
+
+      setNumero("");
+
+    }
+
+  }, [visible]);
+
   const continuar = () => {
 
     if (
@@ -73,13 +83,10 @@ export default function NumeroModal({
   return (
 
     <Modal
-
       visible={visible}
-
       transparent
-
       animationType="fade"
-
+      onShow={() => setNumero("")}
     >
 
       <View style={styles.overlay}>

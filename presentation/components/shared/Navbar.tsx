@@ -1,14 +1,6 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-
+import {View,Text,StyleSheet,TouchableOpacity,Image,} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
 import { COLORS } from "../../utils/color";
 
 interface Props {
@@ -22,6 +14,7 @@ interface Props {
   onInicio: () => void;
   onMenu: () => void;
   onReservas: () => void;
+  onReservacionesHechas: () => void;
 }
 
 export default function Navbar({
@@ -31,6 +24,7 @@ export default function Navbar({
   onInicio,
   onMenu,
   onReservas,
+  onReservacionesHechas,
 }: Props) {
 
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -95,6 +89,31 @@ export default function Navbar({
           >
             <Text style={styles.menuText}>Reservaciones</Text>
           </TouchableOpacity>
+
+          {
+            usuario?.rol === "admin" && (
+
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => {
+
+                  setMenuAbierto(false);
+
+                  onReservacionesHechas();
+
+                }}
+              >
+
+                <Text style={styles.menuText}>
+
+                  Reservaciones Hechas
+
+                </Text>
+
+              </TouchableOpacity>
+
+            )
+          }
 
           <TouchableOpacity
             style={styles.menuItem}

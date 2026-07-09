@@ -30,11 +30,15 @@ export default function RootLayout() {
 
           <Stack.Screen name="reservas" />
 
+          <Stack.Screen name="reservacionesHechas"/>
+
           <Stack.Screen name="crearReserva" />
 
           <Stack.Screen name="detalleReserva" />
 
           <Stack.Screen name="editarReserva" />
+
+          
 
         </Stack>
 

@@ -1,27 +1,21 @@
 import { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  FlatList,
-} from "react-native";
-
+import {SafeAreaView,StyleSheet,Text,FlatList, Alert} from "react-native";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import MesaCard from "../presentation/components/Reserva/MesaCard";
 import SeleccionHoraModal from "../presentation/components/Reserva/SeleccionHoraModal";
 import NumeroModal from "../presentation/components/Reserva/NumeroModal";
 import ComensalesModal from "../presentation/components/Reserva/ComensalesModal";
 import ResumenReservaModal from "../presentation/components/Reserva/ResumenReservaModal";
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
-
+import DateTimePicker, {DateTimePickerEvent,} from "@react-native-community/datetimepicker";
+import { useRouter } from "expo-router";
+import Navbar from "../presentation/components/shared/Navbar";
 import { useReserva } from "../presentation/context/ReservaContext";
 import { useUsuario } from "../presentation/context/UsuarioContext";
-import { mesasMock } from "../presentation/data/mesasMock";
 import { COLORS } from "../presentation/utils/color";
 
 export default function Reservas() {
+
+  const router = useRouter();
 
   const [mostrarTodas, setMostrarTodas] = useState(false);
 
@@ -37,15 +31,41 @@ export default function Reservas() {
 
   const [mostrarResumen,setMostrarResumen]=useState(false);
 
-  const { reservaTemporal,setReservaTemporal }=useReserva();
+  const { reservaTemporal,setReservaTemporal, platosSeleccionados, mesas }=useReserva();
 
   const { usuarioActual }=useUsuario();
 
-  const mesas = mostrarTodas
-    ? mesasMock
-    : mesasMock.slice(0, 4);
+const mesasMostrar =
+
+    mostrarTodas
+
+        ? mesas
+
+        : mesas.slice(0,4);
 
   const seleccionarMesa = (nombre: string) => {
+
+  if (!usuarioActual) {
+
+    Alert.alert(
+      "Iniciar sesión",
+      "Debe iniciar sesión para realizar una reservación."
+    );
+
+    return;
+
+  }
+
+  if (platosSeleccionados.length === 0) {
+
+    Alert.alert(
+      "Selecciona tu plato",
+      "⚠️ Selecciona tu plato antes de hacer una reservación."
+    );
+
+    return;
+
+  }
 
   setReservaTemporal({
 
@@ -63,6 +83,25 @@ export default function Reservas() {
 
     <SafeAreaView style={styles.container}>
 
+      <Navbar
+
+          usuario={usuarioActual}
+
+          onLogin={() => router.push("/login")}
+
+          onLogout={() => {}}
+
+          onInicio={() => router.push("/home")}
+
+          onMenu={() => router.push("/menu")}
+
+          onReservas={() => {}}
+
+          onReservacionesHechas={() => router.push("/reservacionesHechas")}
+
+        />
+
+
       <Text style={styles.title}>
 
         Reservaciones
@@ -77,7 +116,7 @@ export default function Reservas() {
 
       <FlatList
 
-        data={mesas}
+        data={mesasMostrar}
 
         keyExtractor={(item) => item.id.toString()}
 
@@ -280,7 +319,7 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
 
-    marginTop: 10,
+    marginTop: 20,
 
   },
 

@@ -17,5 +17,6 @@ export interface Reserva {
   comensales: number;
   prioridad: PrioridadReserva;
   estado: EstadoReserva;
-  fechaRegistro: string;
+  fecha: string;
+  hora: string;
 }
