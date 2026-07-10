@@ -1,18 +1,7 @@
-import {
-  createContext,
-  useReducer,
-  useContext,
-  ReactNode,
-  useState,
-} from "react";
-
+import {createContext,useReducer,useContext,ReactNode,useState,} from "react";
 import { Usuario } from "../models/Usuario";
 import { usuariosMock } from "../data/usuariosMock";
-
-import {
-  usuarioReducer,
-  UsuarioAction,
-} from "../reducer/usuarioReducer";
+import {usuarioReducer,UsuarioAction,} from "../reducer/usuarioReducer";
 
 interface UsuarioContextProps {
   usuarios: Usuario[];

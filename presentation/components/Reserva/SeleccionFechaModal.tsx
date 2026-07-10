@@ -1,15 +1,6 @@
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
-
-import DateTimePicker, {
-  DateTimePickerEvent,
-} from "@react-native-community/datetimepicker";
+import {Modal,View,Text,StyleSheet,} from "react-native";
+import DateTimePicker, {DateTimePickerEvent,} from "@react-native-community/datetimepicker";
 import { useState } from "react";
-
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { useReserva } from "../../context/ReservaContext";

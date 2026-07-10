@@ -1,13 +1,5 @@
 import React from "react";
-
-import {
-
-  TextInput,
-
-  StyleSheet
-
-} from "react-native";
-
+import {TextInput,StyleSheet} from "react-native";
 import { COLORS } from "../../utils/color";
 
 interface Props {

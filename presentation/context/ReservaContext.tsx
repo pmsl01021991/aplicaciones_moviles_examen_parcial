@@ -3,13 +3,8 @@ import { mesasMock } from "../data/mesasMock";
 import { Mesa } from "../models/Mesa";
 import { Reserva } from "../models/Reserva";
 import { ReservaTemporal } from "../models/ReservaTemporal";
-
 import { reservasMock } from "../data/reservasMock";
-
-import {
-  reservaReducer,
-  ReservaAction,
-} from "../reducer/reservaReducer";
+import {reservaReducer,ReservaAction,} from "../reducer/reservaReducer";
 
 interface ReservaContextProps {
 
