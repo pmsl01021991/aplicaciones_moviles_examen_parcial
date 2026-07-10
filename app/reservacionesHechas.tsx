@@ -1,22 +1,30 @@
 import { useState } from "react";
-import {SafeAreaView,View,Text,StyleSheet,} from "react-native";
+import {SafeAreaView,View,Text,StyleSheet, TouchableOpacity, Alert} from "react-native";
 import { Calendar } from "react-native-calendars";
 import { useRouter } from "expo-router";
-import Navbar from "../presentation/components/shared/Navbar";
 import { COLORS } from "../presentation/utils/color";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { useReserva } from "../presentation/context/ReservaContext";
 import { FlatList } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Reserva } from "../presentation/models/Reserva";
+import ReservaDetalleModal from "../presentation/components/Reserva/ReservaDetalleModal";
+import EditarReservaModal from "../presentation/components/Reserva/EditarReservaModal";
 
 export default function ReservacionesHechas() {
 
   const router = useRouter();
 
-  const { usuarioActual, setUsuarioActual } = useUsuario();
-
-  const { reservas } = useReserva();
+  const { reservas, dispatch } = useReserva();
 
   const [fechaSeleccionada, setFechaSeleccionada] = useState("");
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [editarVisible,setEditarVisible]=useState(false);
+
+  const [reservaSeleccionada, setReservaSeleccionada] =
+  useState<Reserva | null>(null);
 
   const reservasMostrar = fechaSeleccionada === "" ? reservas: reservas.filter
   ((r) => r.fecha === fechaSeleccionada
@@ -26,30 +34,24 @@ export default function ReservacionesHechas() {
 
     <SafeAreaView style={styles.container}>
 
-      <Navbar
+      <View style={styles.header}>
 
-        usuario={usuarioActual}
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => router.back()}
+          >
+            <Ionicons
+              name="arrow-back"
+              size={28}
+              color="#FFF"
+            />
+          </TouchableOpacity>
 
-        onLogin={() => router.push("/login")}
+          <Text style={styles.headerTitle}>
+            Reservaciones Hechas
+          </Text>
 
-        onLogout={() => {
-
-          setUsuarioActual(null);
-
-          router.push("/home");
-
-        }}
-
-        onInicio={() => router.push("/home")}
-
-        onMenu={() => router.push("/menu")}
-
-        onReservas={() => router.push("/reservas")}
-
-        onReservacionesHechas={() => {}}
-
-      />
-
+        </View>
       
 
         <FlatList
@@ -61,12 +63,6 @@ export default function ReservacionesHechas() {
     <>
 
       <View style={styles.content}>
-
-        <Text style={styles.title}>
-
-          Reservaciones Hechas
-
-        </Text>
 
         <Text style={styles.subtitle}>
 
@@ -132,22 +128,42 @@ export default function ReservacionesHechas() {
 
   renderItem={({ item }) => (
 
-    <View style={styles.card}>
+    <TouchableOpacity
+
+      style={styles.card}
+
+      activeOpacity={0.8}
+
+      onPress={() => {
+
+          setReservaSeleccionada(item);
+
+          setModalVisible(true);
+
+      }}
+
+    >
 
       <View style={styles.headerCard}>
 
-        <Text style={styles.cliente}>
+        <View style={styles.clienteContainer}>
 
-          {item.cliente}
+          <Ionicons
+            name="person-circle"
+            size={26}
+            color={COLORS.secondary}
+          />
 
-        </Text>
+          <Text style={styles.cliente}>
+            {item.cliente}
+          </Text>
+
+        </View>
 
         <View style={styles.badge}>
 
           <Text style={styles.badgeText}>
-
             {item.mesa}
-
           </Text>
 
         </View>
@@ -166,12 +182,113 @@ export default function ReservacionesHechas() {
 
       </Text>
 
-    </View>
+    </TouchableOpacity>
 
   )}
 
   contentContainerStyle={styles.lista}
 />
+
+    <ReservaDetalleModal
+
+      visible={modalVisible}
+
+      reserva={reservaSeleccionada}
+
+      onCerrar={() => {
+
+        setModalVisible(false);
+
+        setReservaSeleccionada(null);
+
+      }}
+
+      onEditar={() => {
+
+        setModalVisible(false);
+
+        setEditarVisible(true);
+
+      }}
+
+      onEliminar={() => {
+
+      if (!reservaSeleccionada) return;
+
+      Alert.alert(
+
+        "Eliminar reservación",
+
+        "¿Está seguro que desea eliminar esta reservación?",
+
+        [
+
+          {
+            text: "Cancelar",
+            style: "cancel",
+          },
+
+          {
+
+            text: "Eliminar",
+
+            style: "destructive",
+
+            onPress: () => {
+
+              dispatch({
+
+                type: "DELETE",
+
+                payload: reservaSeleccionada.id,
+
+              });
+
+              setModalVisible(false);
+
+              setReservaSeleccionada(null);
+
+            },
+
+          },
+
+        ]
+
+      );
+
+    }}
+
+    />
+
+    <EditarReservaModal
+
+      visible={editarVisible}
+
+      reserva={reservaSeleccionada}
+
+      onCerrar={() => {
+
+        setEditarVisible(false);
+
+      }}
+
+      onGuardar={(reservaActualizada) => {
+
+        dispatch({
+
+          type: "UPDATE",
+
+          payload: reservaActualizada,
+
+        });
+
+        setEditarVisible(false);
+
+        setReservaSeleccionada(null);
+
+      }}
+
+    />
 
     </SafeAreaView>
 
@@ -271,6 +388,11 @@ const styles = StyleSheet.create({
 
     },
 
+    clienteContainer:{
+      flexDirection:"row",
+      alignItems:"center",
+    },
+
     cliente: {
 
     fontSize: 20,
@@ -297,6 +419,31 @@ const styles = StyleSheet.create({
 
     fontWeight: "bold",
 
+    },
+
+    header:{
+      flexDirection:"row",
+      alignItems:"center",
+      paddingHorizontal:20,
+      paddingTop:10,
+    },
+
+    backButton:{
+      width:45,
+      height:45,
+      borderRadius:22,
+      backgroundColor:"#1F2937",
+      justifyContent:"center",
+      alignItems:"center",
+    },
+
+    headerTitle:{
+      flex:1,
+      textAlign:"center",
+      color:COLORS.secondary,
+      fontSize:28,
+      fontWeight:"bold",
+      marginRight:45,
     },
 
     numero: {

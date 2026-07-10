@@ -47,7 +47,7 @@ export default function SeleccionHoraModal({
 
     setReservaTemporal,
 
-    mesas,
+    reservas,
 
   } = useReserva();
 
@@ -76,12 +76,9 @@ export default function SeleccionHoraModal({
 
     }
 
-    const mesa = mesas.find(
-      m => m.nombre === reservaTemporal.mesa
-    );
-
-    const ocupado = mesa?.reservas.some(
-      reserva =>
+    const ocupado = reservas.some(
+      (reserva) =>
+        reserva.mesa === reservaTemporal.mesa &&
         reserva.fecha === reservaTemporal.fecha &&
         reserva.hora === hora
     );
@@ -144,12 +141,9 @@ export default function SeleccionHoraModal({
 
             {horas.map((item) => {
 
-              const mesa = mesas.find(
-                m => m.nombre === reservaTemporal.mesa
-              );
-
-              const ocupado = mesa?.reservas.some(
-                reserva =>
+              const ocupado = reservas.some(
+                (reserva) =>
+                  reserva.mesa === reservaTemporal.mesa &&
                   reserva.fecha === reservaTemporal.fecha &&
                   reserva.hora === item
               );

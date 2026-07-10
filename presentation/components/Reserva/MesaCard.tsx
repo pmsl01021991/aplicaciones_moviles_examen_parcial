@@ -5,10 +5,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
+import { useReserva } from "../../context/ReservaContext";
 import { Mesa } from "../../models/Mesa";
 import { COLORS } from "../../utils/color";
-import Footer from "../../../presentation/components/shared/Footer";
 
 interface Props {
 
@@ -26,7 +25,13 @@ export default function MesaCard({
 
 }: Props) {
 
-  const disponibleTotal = mesa.reservas.length === 0;
+  const { reservas } = useReserva();
+
+  const reservasMesa = reservas.filter(
+    (r) => r.mesa === mesa.nombre
+  );
+
+  const disponibleTotal = reservasMesa.length === 0;
 
   return (
 
@@ -90,26 +95,16 @@ export default function MesaCard({
 
         {
 
-          mesa.reservas
-
-            .slice(0, 2)
-
-            .map((reserva, index) => (
-
+         reservasMesa
+            .slice(0,2)
+            .map((reserva,index)=>(
               <View
-
                 key={index}
-
                 style={styles.badge}
-
               >
-
                 <Text style={styles.badgeText}>
-
-                  {reserva.nombre} - {reserva.fecha} - {reserva.hora}
-
+                  {reserva.cliente} - {reserva.fecha} - {reserva.hora}
                 </Text>
-
               </View>
 
             ))
@@ -118,13 +113,13 @@ export default function MesaCard({
 
         {
 
-          mesa.reservas.length > 2 && (
+          reservasMesa.length > 2 && (
 
             <View style={styles.badge}>
 
               <Text style={styles.badgeText}>
 
-                +{mesa.reservas.length - 2} más
+                +{reservasMesa.length - 2} más
 
               </Text>
 

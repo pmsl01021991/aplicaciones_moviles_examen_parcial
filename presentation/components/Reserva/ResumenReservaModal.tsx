@@ -50,42 +50,6 @@ export default function ResumenReservaModal({
 
   const confirmar = () => {
 
-    const nuevasMesas = mesas.map((mesa) => {
-
-      if (mesa.nombre !== reservaTemporal.mesa) {
-
-        return mesa;
-
-      }
-
-      return {
-
-        ...mesa,
-
-        reservas: [
-
-          ...mesa.reservas,
-
-          {
-
-            nombre: usuario.split("@")[0],
-
-            fecha: reservaTemporal.fecha,
-
-            hora: reservaTemporal.hora,
-
-          }
-
-        ]
-
-      };
-
-    });
-
-    
-
-    setMesas(nuevasMesas);
-
     dispatch({
 
       type: "ADD",
