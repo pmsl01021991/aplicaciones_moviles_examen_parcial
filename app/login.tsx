@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Alert,
-} from "react-native";
-
+import {SafeAreaView,StyleSheet,View,Alert,} from "react-native";
 import LoginForm from "../presentation/components/Login/LoginForm";
 import RegisterForm from "../presentation/components/Register/RegisterForm";
-
 import useLoginForm from "../presentation/hooks/useLoginForm";
-
 import { useUsuario } from "../presentation/context/UsuarioContext";
-
 import { COLORS } from "../presentation/utils/color";
 
 export default function Login() {

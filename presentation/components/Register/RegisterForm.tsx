@@ -1,18 +1,8 @@
 import { useState } from "react";
-
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Switch,
-} from "react-native";
-
+import {View,Text,StyleSheet,TouchableOpacity,Switch,} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-
 import CustomTextInput from "../shared/CustomTextInput";
 import PrimaryButton from "../shared/PrimaryButton";
-
 import { COLORS } from "../../utils/color";
 
 interface Props {

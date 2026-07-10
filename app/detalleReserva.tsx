@@ -1,6 +1,5 @@
 import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import { useReserva } from "../presentation/context/ReservaContext";
 import { COLORS } from "../presentation/utils/color";

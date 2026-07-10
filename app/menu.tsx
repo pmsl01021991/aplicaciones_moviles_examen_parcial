@@ -1,15 +1,5 @@
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
+import {FlatList,Image,SafeAreaView,StyleSheet,Text,View,Alert,TouchableOpacity,} from "react-native";
 import { useState } from "react";
-
 import { COLORS } from "../presentation/utils/color";
 import { useReserva } from "../presentation/context/ReservaContext";
 

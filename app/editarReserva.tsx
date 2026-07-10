@@ -1,14 +1,11 @@
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect } from "react";
-
 import { useReserva } from "../presentation/context/ReservaContext";
 import useReservaForm from "../presentation/hooks/useReservaForm";
-
 import RegisterHeader from "../presentation/components/Register/RegisterHeader";
 import CustomTextInput from "../presentation/components/shared/CustomTextInput";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
-
 import { COLORS } from "../presentation/utils/color";
 
 export default function EditarReserva() {
