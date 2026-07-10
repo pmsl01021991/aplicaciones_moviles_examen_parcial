@@ -94,7 +94,9 @@ export default function EditarReserva() {
 
                 estado,
 
-                fechaRegistro: reserva!.fechaRegistro
+                fecha: reserva!.fecha,
+
+                hora: reserva!.hora
 
             }
 

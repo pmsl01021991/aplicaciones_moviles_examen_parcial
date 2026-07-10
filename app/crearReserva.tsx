@@ -70,7 +70,12 @@ export default function CrearReserva() {
 
         estado,
 
-        fechaRegistro: new Date().toLocaleDateString()
+        fecha: new Date().toISOString().split("T")[0],
+
+        hora: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
 
       }
 

@@ -50,7 +50,7 @@ export default function ReservaCard({
       </Text>
 
       <Text style={styles.fecha}>
-        {reserva.fechaRegistro}
+        {reserva.fecha}
       </Text>
     </TouchableOpacity>
   );

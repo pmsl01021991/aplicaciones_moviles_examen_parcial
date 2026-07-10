@@ -183,7 +183,7 @@ export default function DetalleReserva() {
 
         <Text style={styles.value}>
 
-          {reserva.fechaRegistro}
+          {reserva.fecha}
 
         </Text>
 
