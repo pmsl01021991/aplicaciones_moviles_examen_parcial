@@ -1,16 +1,8 @@
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
-
+import {Modal,View,Text,StyleSheet,} from "react-native";
 import { useEffect, useState } from "react";
-
 import PrimaryButton from "../shared/PrimaryButton";
 import { Picker } from "@react-native-picker/picker";
 import { COLORS } from "../../utils/color";
-
 import { useReserva } from "../../context/ReservaContext";
 
 interface Props {

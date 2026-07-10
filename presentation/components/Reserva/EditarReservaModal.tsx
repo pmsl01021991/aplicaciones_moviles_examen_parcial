@@ -1,12 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-} from "react-native";
-
+import {Modal,View,Text,StyleSheet,TextInput,} from "react-native";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { Reserva } from "../../models/Reserva";

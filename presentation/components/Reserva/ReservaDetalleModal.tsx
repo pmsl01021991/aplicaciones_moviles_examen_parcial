@@ -1,10 +1,4 @@
-import {
-  Modal,
-  View,
-  Text,
-  StyleSheet,
-} from "react-native";
-
+import {Modal,View,Text,StyleSheet,} from "react-native";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { Reserva } from "../../models/Reserva";

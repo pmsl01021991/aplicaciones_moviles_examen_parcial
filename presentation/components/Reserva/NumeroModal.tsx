@@ -1,17 +1,7 @@
-import {
-  Modal,
-  View,
- Text,
-  StyleSheet,
-  TextInput,
-} from "react-native";
-
+import {Modal,View,Text,StyleSheet,TextInput,} from "react-native";
 import { useEffect, useState } from "react";
-
 import PrimaryButton from "../shared/PrimaryButton";
-
 import { COLORS } from "../../utils/color";
-
 import { useReserva } from "../../context/ReservaContext";
 
 interface Props {
