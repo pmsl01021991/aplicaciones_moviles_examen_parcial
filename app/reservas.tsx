@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {SafeAreaView,StyleSheet,Text,FlatList, Alert, TouchableOpacity, View} from "react-native";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import MesaCard from "../presentation/components/Reserva/MesaCard";
@@ -12,6 +12,9 @@ import { useRouter } from "expo-router";
 import { useReserva } from "../presentation/context/ReservaContext";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { COLORS } from "../presentation/utils/color";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { Reserva } from "../presentation/models/Reserva";
 
 export default function Reservas() {
 
@@ -29,9 +32,28 @@ export default function Reservas() {
 
   const [mostrarResumen,setMostrarResumen]=useState(false);
 
+  const [reservas, setReservas] = useState<Reserva[]>([]);
+
   const { reservaTemporal,setReservaTemporal, platosSeleccionados, mesas }=useReserva();
 
   const { usuarioActual }=useUsuario();
+
+  useEffect(() => {
+  cargarReservas();
+}, []);
+
+const cargarReservas = async () => {
+
+  const snapshot = await getDocs(collection(db, "reservas"));
+
+  const datos = snapshot.docs.map((d) => ({
+    id: d.id,
+    ...d.data(),
+  })) as Reserva[];
+
+  setReservas(datos);
+
+};
 
   const mesasMostrar = mesas;
 
@@ -115,11 +137,9 @@ export default function Reservas() {
         renderItem={({ item }) => (
 
           <MesaCard
-
             mesa={item}
-
+            reservas={reservas}
             onPress={() => seleccionarMesa(item.nombre)}
-
           />
 
         )}
@@ -247,25 +267,16 @@ export default function Reservas() {
       />
 
       <ResumenReservaModal
-
-      visible={mostrarResumen}
-
-      usuario={usuarioActual?.correo ?? ""}
-
-      onCerrar={()=>{
-
-      setMostrarResumen(false);
-
-      setMostrarComensales(true);
-
-      }}
-
-      onConfirmar={()=>{
-
-      setMostrarResumen(false);
-
-      }}
-
+        visible={mostrarResumen}
+        usuario={usuarioActual?.correo ?? ""}
+        onCerrar={() => {
+          setMostrarResumen(false);
+          setMostrarComensales(true);
+        }}
+        onConfirmar={async () => {
+          await cargarReservas();
+          setMostrarResumen(false);
+        }}
       />
 
     </SafeAreaView>

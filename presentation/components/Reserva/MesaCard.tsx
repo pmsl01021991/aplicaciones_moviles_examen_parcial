@@ -1,11 +1,13 @@
 import {View,Text,Image,TouchableOpacity,StyleSheet,} from "react-native";
-import { useReserva } from "../../context/ReservaContext";
 import { Mesa } from "../../models/Mesa";
 import { COLORS } from "../../utils/color";
+import { Reserva } from "../../models/Reserva";
 
 interface Props {
 
   mesa: Mesa;
+
+  reservas: Reserva[];
 
   onPress: () => void;
 
@@ -15,11 +17,11 @@ export default function MesaCard({
 
   mesa,
 
+  reservas,
+
   onPress,
 
 }: Props) {
-
-  const { reservas } = useReserva();
 
   const reservasMesa = reservas.filter(
     (r) => r.mesa === mesa.nombre

@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../firebaseConfig";
 import {SafeAreaView,View,Text,StyleSheet, TouchableOpacity, Alert} from "react-native";
 import { Calendar } from "react-native-calendars";
 import { useRouter } from "expo-router";
 import { COLORS } from "../presentation/utils/color";
-import { useUsuario } from "../presentation/context/UsuarioContext";
-import { useReserva } from "../presentation/context/ReservaContext";
 import { FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Reserva } from "../presentation/models/Reserva";
@@ -15,7 +23,7 @@ export default function ReservacionesHechas() {
 
   const router = useRouter();
 
-  const { reservas, dispatch } = useReserva();
+  const [reservas, setReservas] = useState<Reserva[]>([]);
 
   const [fechaSeleccionada, setFechaSeleccionada] = useState("");
 
@@ -25,6 +33,23 @@ export default function ReservacionesHechas() {
 
   const [reservaSeleccionada, setReservaSeleccionada] =
   useState<Reserva | null>(null);
+
+  useEffect(() => {
+      cargarReservas();
+    }, []);
+
+    const cargarReservas = async () => {
+
+      const snapshot = await getDocs(collection(db, "reservas"));
+
+      const datos = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...d.data(),
+      })) as Reserva[];
+
+      setReservas(datos);
+
+    };
 
   const reservasMostrar = fechaSeleccionada === "" ? reservas: reservas.filter
   ((r) => r.fecha === fechaSeleccionada
@@ -172,7 +197,7 @@ export default function ReservacionesHechas() {
 
       <Text style={styles.numero}>
 
-        {item.telefono}
+        {item.numero}
 
       </Text>
 
@@ -234,21 +259,19 @@ export default function ReservacionesHechas() {
 
             style: "destructive",
 
-            onPress: () => {
+            onPress: async () => {
 
-              dispatch({
+            await deleteDoc(
+              doc(db, "reservas", reservaSeleccionada.id)
+            );
 
-                type: "DELETE",
+            await cargarReservas();
 
-                payload: reservaSeleccionada.id,
+            setModalVisible(false);
 
-              });
+            setReservaSeleccionada(null);
 
-              setModalVisible(false);
-
-              setReservaSeleccionada(null);
-
-            },
+          },
 
           },
 
@@ -272,15 +295,22 @@ export default function ReservacionesHechas() {
 
       }}
 
-      onGuardar={(reservaActualizada) => {
+      onGuardar={async (reservaActualizada) => {
 
-        dispatch({
+        await updateDoc(
+          doc(db, "reservas", reservaActualizada.id),
+          {
+            cliente: reservaActualizada.cliente,
+            numero: reservaActualizada.numero,
+            plato: reservaActualizada.plato,
+            mesa: reservaActualizada.mesa,
+            fecha: reservaActualizada.fecha,
+            hora: reservaActualizada.hora,
+            comensales: reservaActualizada.comensales,
+          }
+        );
 
-          type: "UPDATE",
-
-          payload: reservaActualizada,
-
-        });
+        await cargarReservas();
 
         setEditarVisible(false);
 

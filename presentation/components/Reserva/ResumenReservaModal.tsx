@@ -1,4 +1,14 @@
-import {Modal,View,Text,StyleSheet,Alert,} from "react-native";
+import { Modal, View, Text, StyleSheet, Alert } from "react-native";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { useReserva } from "../../context/ReservaContext";
@@ -40,47 +50,48 @@ export default function ResumenReservaModal({
 } = useReserva();
   
 
-  const confirmar = () => {
+  const confirmar = async () => {
 
-    dispatch({
+  try {
 
-      type: "ADD",
+    await addDoc(collection(db, "reservas"), {
 
-      payload: {
-
-        id: Date.now().toString(),
-
-        cliente: usuario.split("@")[0],
-
-        telefono: reservaTemporal.numero,
-
-        mesa: reservaTemporal.mesa,
-
-        plato: platosSeleccionados.join(", "),
-
-        comensales: reservaTemporal.comensales,
-
-        prioridad: "MEDIA",
-
-        estado: "PENDIENTE",
-
-        fecha: reservaTemporal.fecha,
-
-        hora: reservaTemporal.hora,
-
-      }
+      cliente: usuario.split("@")[0],
+      plato: platosSeleccionados.join(", "),
+      mesa: reservaTemporal.mesa,
+      fecha: reservaTemporal.fecha,
+      hora: reservaTemporal.hora,
+      numero: reservaTemporal.numero,
+      comensales: reservaTemporal.comensales,
 
     });
+
+    const q = query(
+      collection(db, "platosSeleccionados"),
+      where("usuario", "==", usuario)
+    );
+
+    const snapshot = await getDocs(q);
+
+    for (const documento of snapshot.docs) {
+
+      await deleteDoc(
+        doc(db, "platosSeleccionados", documento.id)
+      );
+
+    }
 
     setPlatosSeleccionados([]);
 
     setReservaTemporal({
+
       plato: "",
       mesa: "",
       fecha: "",
       hora: "",
       numero: "",
       comensales: 1,
+
     });
 
     Alert.alert(
@@ -97,13 +108,24 @@ export default function ResumenReservaModal({
 
           onPress: onConfirmar,
 
-        }
+        },
 
       ]
 
     );
 
-  };
+  } catch (error) {
+
+    console.log(error);
+
+    Alert.alert(
+      "Error",
+      "No se pudo registrar la reservación."
+    );
+
+  }
+
+};
 
   return (
 

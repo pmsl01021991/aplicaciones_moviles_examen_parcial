@@ -63,7 +63,7 @@ export default function ReservaDetalleModal({
 
           <Text style={styles.texto}>
 
-            📞 <Text style={styles.bold}>Teléfono:</Text> {reserva.telefono}
+            📞 <Text style={styles.bold}>Teléfono:</Text> {reserva.numero}
 
           </Text>
 

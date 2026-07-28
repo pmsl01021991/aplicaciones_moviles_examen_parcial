@@ -5,7 +5,7 @@ export const reservasMock: Reserva[] = [
   {
     id: "1",
     cliente: "Juan Pérez",
-    telefono: "987654321",
+    numero: "987654321",
     mesa: "Mesa 1",
     plato: "Lomo Saltado",
     comensales: 2,
@@ -18,7 +18,7 @@ export const reservasMock: Reserva[] = [
   {
     id: "2",
     cliente: "María López",
-    telefono: "912345678",
+    numero: "912345678",
     mesa: "Mesa 5",
     plato: "Ají de Gallina",
     comensales: 4,
@@ -31,7 +31,7 @@ export const reservasMock: Reserva[] = [
   {
     id: "3",
     cliente: "Carlos Ramos",
-    telefono: "998877665",
+    numero: "998877665",
     mesa: "Mesa 8",
     plato: "Arroz Chaufa",
     comensales: 3,

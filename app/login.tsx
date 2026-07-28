@@ -7,12 +7,14 @@ import useLoginForm from "../presentation/hooks/useLoginForm";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { COLORS } from "../presentation/utils/color";
 import { LinearGradient } from "expo-linear-gradient";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
 export default function Login() {
 
   const router = useRouter();
 
-  const {usuarios,usuarioActual,setUsuarioActual,dispatch,} = useUsuario();
+  const {usuarioActual, setUsuarioActual,} = useUsuario();
 
   const [mostrarRegistro, setMostrarRegistro] = useState(false);
 
@@ -33,113 +35,116 @@ export default function Login() {
 
   } = useLoginForm();
 
-  const ingresar = () => {
+  const ingresar = async () => {
 
-    if (!validarLogin()) return;
+      if (!validarLogin()) return;
 
-    const usuario = usuarios.find(
+      try {
 
-      u =>
-        u.correo === correo &&
-        u.password === password
+        const q = query(
+          collection(db, "usuarios"),
+          where("username", "==", correo),
+          where("password", "==", password)
+        );
 
-    );
+        const querySnapshot = await getDocs(q);
 
-    if (!usuario) {
+        if (querySnapshot.empty) {
 
-      Alert.alert(
+          Alert.alert(
+            "Error",
+            "Correo o contraseña incorrectos."
+          );
 
-        "Error",
-
-        "Correo o contraseña incorrectos."
-
-      );
-
-      return;
-
-    }
-
-    setUsuarioActual(usuario);
-
-    Alert.alert(
-
-      "Bienvenido",
-
-      usuario.correo,
-
-      [
-
-        {
-
-          text: "Aceptar",
-
-          onPress: () => router.replace("/home")
-
+          return;
         }
 
-      ]
+        const datos = querySnapshot.docs[0].data();
 
-    );
+        const usuario = {
+          id: querySnapshot.docs[0].id,
+          correo: datos.username,
+          password: datos.password,
+          rol: datos.rol,
+        };
 
-  };
+        setUsuarioActual(usuario);
 
-  const registrar = () => {
+        Alert.alert(
+          "Bienvenido",
+          usuario.correo,
+          [
+            {
+              text: "Aceptar",
+              onPress: () => router.replace("/home"),
+            },
+          ]
+        );
 
-    if (!validarRegistro()) return;
+      } catch (error) {
 
-    const existe = usuarios.some(
+        console.log(error);
 
-      u => u.correo === correo
-
-    );
-
-    if (existe) {
-
-      Alert.alert(
-
-        "Error",
-
-        "Ese correo ya está registrado."
-
-      );
-
-      return;
-
-    }
-
-    dispatch({
-
-      type: "REGISTER",
-
-      payload: {
-
-        id: Date.now().toString(),
-
-        correo,
-
-        password,
-
-        rol: "cliente"
+        Alert.alert(
+          "Error",
+          "No se pudo conectar con Firestore."
+        );
 
       }
 
-    });
+    };
 
-    Alert.alert(
+  const registrar = async () => {
 
-      "Correcto",
+    if (!validarRegistro()) return;
 
-      "Cuenta creada correctamente."
+    try {
 
-    );
+      const q = query(
+        collection(db, "usuarios"),
+        where("username", "==", correo)
+      );
 
-    setMostrarRegistro(false);
+      const querySnapshot = await getDocs(q);
 
-    setCorreo("");
+      if (!querySnapshot.empty) {
 
-    setPassword("");
+        Alert.alert(
+          "Error",
+          "Ese correo ya está registrado."
+        );
 
-    setConfirmPassword("");
+        return;
+
+      }
+
+      await addDoc(collection(db, "usuarios"), {
+        username: correo,
+        password: password,
+        rol: "cliente",
+      });
+
+      Alert.alert(
+        "Correcto",
+        "Cuenta creada correctamente."
+      );
+
+      setMostrarRegistro(false);
+
+      setCorreo("");
+      setPassword("");
+      setConfirmPassword("");
+
+    } catch (error) {
+
+      console.log(error);
+
+      Alert.alert(
+        "Error",
+        "No se pudo registrar el usuario."
+      );
+
+    }
 
   };
 

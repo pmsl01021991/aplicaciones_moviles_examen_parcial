@@ -11,7 +11,7 @@ export type PrioridadReserva =
 export interface Reserva {
   id: string;
   cliente: string;
-  telefono: string;
+  numero: string;
   mesa: string;
   plato: string;
   comensales: number;

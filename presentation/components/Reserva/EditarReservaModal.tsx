@@ -25,7 +25,7 @@ export default function EditarReservaModal({
 }: Props) {
 
   const [cliente,setCliente]=useState("");
-  const [telefono,setTelefono]=useState("");
+  const [numero,setNumero]=useState("");
   const [plato,setPlato]=useState("");
   const [mesa,setMesa]=useState("");
   const [fecha,setFecha]=useState("");
@@ -37,7 +37,7 @@ export default function EditarReservaModal({
     if(reserva){
 
       setCliente(reserva.cliente);
-      setTelefono(reserva.telefono);
+      setNumero(reserva.numero);
       setPlato(reserva.plato);
       setMesa(reserva.mesa);
       setFecha(reserva.fecha);
@@ -75,9 +75,9 @@ export default function EditarReservaModal({
 
           <TextInput
             style={styles.input}
-            value={telefono}
-            onChangeText={setTelefono}
-            placeholder="Teléfono"
+            value={numero}
+            onChangeText={setNumero}
+            placeholder="Número"
           />
 
           <TextInput
@@ -128,7 +128,7 @@ export default function EditarReservaModal({
 
                 cliente,
 
-                telefono,
+                numero,
 
                 plato,
 
