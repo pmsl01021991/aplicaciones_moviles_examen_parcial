@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "expo-router";
-import {SafeAreaView,StyleSheet,View,Alert,} from "react-native";
+import {SafeAreaView,StyleSheet,View,Alert } from "react-native";
 import LoginForm from "../presentation/components/Login/LoginForm";
 import RegisterForm from "../presentation/components/Register/RegisterForm";
 import useLoginForm from "../presentation/hooks/useLoginForm";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { COLORS } from "../presentation/utils/color";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Login() {
 
@@ -142,67 +143,41 @@ export default function Login() {
 
   };
 
-  return (
+    return (
+      <LinearGradient
+        colors={["#0F172A", "#111827", "#1F2937"]}
+        style={{ flex: 1 }}
+      >
+        <SafeAreaView style={styles.container}>
+          <View style={styles.overlay}>
+            {mostrarRegistro ? (
+              <RegisterForm
+                correo={correo}
+                password={password}
+                confirmPassword={confirmPassword}
+                setCorreo={setCorreo}
+                setPassword={setPassword}
+                setConfirmPassword={setConfirmPassword}
+                errors={errors}
+                onRegister={registrar}
+                onLogin={() => setMostrarRegistro(false)}
+              />
+            ) : (
+              <LoginForm
+                correo={correo}
+                password={password}
+                setCorreo={setCorreo}
+                setPassword={setPassword}
+                errors={errors}
+                onLogin={ingresar}
+                onRegister={() => setMostrarRegistro(true)}
+              />
+            )}
+          </View>
+        </SafeAreaView>
+      </LinearGradient>
+    );
 
-    <SafeAreaView style={styles.container}>
-
-      <View style={styles.overlay}>
-
-        {
-
-          mostrarRegistro ? (
-
-            <RegisterForm
-
-              correo={correo}
-
-              password={password}
-
-              confirmPassword={confirmPassword}
-
-              setCorreo={setCorreo}
-
-              setPassword={setPassword}
-
-              setConfirmPassword={setConfirmPassword}
-
-              errors={errors}
-
-              onRegister={registrar}
-
-              onLogin={() => setMostrarRegistro(false)}
-
-            />
-
-          ) : (
-
-            <LoginForm
-
-              correo={correo}
-
-              password={password}
-
-              setCorreo={setCorreo}
-
-              setPassword={setPassword}
-
-              errors={errors}
-
-              onLogin={ingresar}
-
-              onRegister={() => setMostrarRegistro(true)}
-
-          />
-
-          )
-
-        }
-
-      </View>
-
-    </SafeAreaView>
-
-  );
 
 }
 
@@ -210,14 +185,14 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: "transparent",
   },
 
-  overlay: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: 28,
-    paddingVertical: 20,
-  },
+ overlay: {
+  flex: 1,
+  paddingHorizontal: 28,
+  paddingTop: 50,
+  paddingBottom: 20,
+},
 
 });

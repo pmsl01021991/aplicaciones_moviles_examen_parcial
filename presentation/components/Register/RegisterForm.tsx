@@ -155,17 +155,10 @@ export default function RegisterForm({
 const styles = StyleSheet.create({
 
   card: {
-
-    backgroundColor:"#1F2937",
-
-    borderRadius:12,
-
-    padding:20,
-
-    borderWidth:1,
-
-    borderColor:"#374151"
-
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
 
   iconContainer:{

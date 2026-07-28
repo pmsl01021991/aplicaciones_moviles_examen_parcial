@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomTextInput from "../shared/CustomTextInput";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
+
 
 interface Props {
   correo: string;
@@ -33,13 +34,11 @@ export default function LoginForm({
     <View style={styles.container}>
       <View style={styles.header}>
 
-        <View style={styles.iconContainer}>
-          <Ionicons
-            name="restaurant"
-            size={60}
-            color="#FFFFFF"
-          />
-        </View>
+        <Image
+          source={require("../../../assets/images/buensabor.png")}
+          style={styles.logo}
+          resizeMode="cover"
+        />
 
         <Text style={styles.restaurant}>
           Restaurante
@@ -97,8 +96,9 @@ export default function LoginForm({
 
 const styles = StyleSheet.create({
   container:{
-   flex:1,
-   justifyContent:"center"
+    flex:1,
+    justifyContent:"center",
+    paddingHorizontal:10,
 },
 
   iconContainer: {
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 18,
-    elevation: 8,
+    marginBottom: 20,
+    elevation: 12,
   },
 
   title: {
@@ -139,6 +139,18 @@ subtitle: {
     color: COLORS.secondary,
     fontSize: 16,
     fontWeight: "bold",
+  },
+
+  logo: {
+    width: 230,
+    height: 230,
+    borderRadius: 110,      
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "#D4AF37", 
+    backgroundColor: "#000",
+    alignSelf: "center",
+    marginBottom: 20,
   },
 
   footer: {

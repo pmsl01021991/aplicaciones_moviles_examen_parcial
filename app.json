@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "examen_parcial",
+    "name": "Restaurante el buen sabor",
     "slug": "examen_parcial",
+    "icon": "./assets/images/chef-icon.png",
     "version": "1.0.0",
     "orientation": "portrait",
     "scheme": "examenpreliminar",
@@ -12,7 +13,15 @@
     },
     "android": {
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.pablo20261991.restaurantebuensabor",
+      "adaptiveIcon": {
+
+        "foregroundImage": "./assets/images/chef-icon.png",
+
+        "backgroundColor": "#F97316"
+
+      }
     },
     "web": {
       "output": "static"
@@ -24,6 +33,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "019da381-0c69-417f-b1b4-90e2add85ed1"
+      }
     }
   }
 }

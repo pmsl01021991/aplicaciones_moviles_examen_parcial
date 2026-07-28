@@ -1,6 +1,9 @@
 import React from "react";
 import {View,Text,TextInput,StyleSheet} from "react-native";
 import { COLORS } from "../../utils/color";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 
 interface Props {
 
@@ -23,68 +26,57 @@ interface Props {
 export default function CustomTextInput({
 
   label,
-
   value,
-
   onChangeText,
-
   placeholder,
-
   secureTextEntry,
-
   keyboardType,
-
   error
 
 }: Props) {
+
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   return (
 
     <View style={styles.container}>
 
-      <Text style={styles.label}>
+      <Text style={styles.label}>{label}</Text>
 
-        {label}
-
-      </Text>
-
-      <TextInput
-
-        value={value}
-
-        placeholder={placeholder}
-
-        placeholderTextColor="#9CA3AF"
-
-        onChangeText={onChangeText}
-
-        secureTextEntry={secureTextEntry}
-
-        keyboardType={keyboardType}
-
+      <View
         style={[
-
-          styles.input,
-
+          styles.inputContainer,
           error && styles.errorInput
-
         ]}
+      >
 
-      />
+        <TextInput
+          value={value}
+          placeholder={placeholder}
+          placeholderTextColor="#9CA3AF"
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry && !mostrarPassword}
+          keyboardType={keyboardType}
+          style={styles.input}
+        />
 
-      {
+        {secureTextEntry && (
+          <TouchableOpacity
+            onPress={() => setMostrarPassword(!mostrarPassword)}
+          >
+            <Ionicons
+              name={mostrarPassword ? "eye-off" : "eye"}
+              size={22}
+              color="#9CA3AF"
+            />
+          </TouchableOpacity>
+        )}
 
-        error && (
+      </View>
 
-          <Text style={styles.error}>
-
-            {error}
-
-          </Text>
-
-        )
-
-      }
+      {error && (
+        <Text style={styles.error}>{error}</Text>
+      )}
 
     </View>
 
@@ -111,30 +103,15 @@ const styles = StyleSheet.create({
   },
 
   input: {
-
-    backgroundColor: COLORS.input,
-
-    borderRadius: 10,
-
-    paddingHorizontal: 14,
-
-    paddingVertical: 16,
-
-    borderWidth: 1,
-
-    borderColor: COLORS.border,
-
+    flex: 1,
     color: COLORS.white,
-
-    fontSize: 16
-
+    fontSize: 16,
+    height: 55,
   },
 
   errorInput: {
-
-    borderColor: COLORS.danger
-
-  },
+  borderColor: COLORS.danger,
+},
 
   error: {
 
@@ -144,6 +121,17 @@ const styles = StyleSheet.create({
 
     fontSize: 17
 
-  }
+  },
+
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.input,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingHorizontal: 14,
+  },
+
 
 });
