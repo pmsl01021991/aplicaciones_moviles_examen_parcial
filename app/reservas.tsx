@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {SafeAreaView,StyleSheet,Text,FlatList, Alert, TouchableOpacity, View} from "react-native";
+import {SafeAreaView,StyleSheet,Text,FlatList, Alert, TouchableOpacity, View, RefreshControl} from "react-native";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import MesaCard from "../presentation/components/Reserva/MesaCard";
 import SeleccionHoraModal from "../presentation/components/Reserva/SeleccionHoraModal";
@@ -34,6 +34,8 @@ export default function Reservas() {
 
   const [reservas, setReservas] = useState<Reserva[]>([]);
 
+  const [refreshing, setRefreshing] = useState(false);
+
   const { reservaTemporal,setReservaTemporal, platosSeleccionados, mesas }=useReserva();
 
   const { usuarioActual }=useUsuario();
@@ -41,6 +43,16 @@ export default function Reservas() {
   useEffect(() => {
   cargarReservas();
 }, []);
+
+  const onRefresh = async () => {
+
+    setRefreshing(true);
+
+    await cargarReservas();
+
+    setRefreshing(false);
+
+  };
 
 const cargarReservas = async () => {
 
@@ -133,6 +145,12 @@ const cargarReservas = async () => {
         columnWrapperStyle={styles.row}
 
         contentContainerStyle={styles.list}
+         refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
 
         renderItem={({ item }) => (
 

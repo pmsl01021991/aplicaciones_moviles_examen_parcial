@@ -4,6 +4,9 @@ import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { Picker } from "@react-native-picker/picker";
 import { useReserva } from "../../context/ReservaContext";
+import {collection, getDocs, query, where,} from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
+import { Reserva } from "../../models/Reserva";
 
 interface Props {
 
@@ -46,22 +49,40 @@ export default function SeleccionHoraModal({
     reservaTemporal,
 
     setReservaTemporal,
-
-    reservas,
-
+    
   } = useReserva();
 
   const [hora, setHora] = useState("");
+  const [reservasExistentes, setReservasExistentes] = useState<Reserva[]>([]);
 
   useEffect(() => {
 
-    if (visible) {
+  const cargarReservas = async () => {
 
-      setHora("");
+    if (!visible) return;
 
-    }
+    setHora("");
 
-  }, [visible]);
+    const q = query(
+      collection(db, "reservas"),
+      where("mesa", "==", reservaTemporal.mesa),
+      where("fecha", "==", reservaTemporal.fecha)
+    );
+
+    const snapshot = await getDocs(q);
+
+    const datos = snapshot.docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    })) as Reserva[];
+
+    setReservasExistentes(datos);
+
+  };
+
+  cargarReservas();
+
+}, [visible, reservaTemporal.mesa, reservaTemporal.fecha]);
 
   const continuar = () => {
 
@@ -76,7 +97,7 @@ export default function SeleccionHoraModal({
 
     }
 
-    const ocupado = reservas.some(
+    const ocupado = reservasExistentes.some(
       (reserva) =>
         reserva.mesa === reservaTemporal.mesa &&
         reserva.fecha === reservaTemporal.fecha &&
@@ -141,7 +162,7 @@ export default function SeleccionHoraModal({
 
             {horas.map((item) => {
 
-              const ocupado = reservas.some(
+              const ocupado = reservasExistentes.some(
                 (reserva) =>
                   reserva.mesa === reservaTemporal.mesa &&
                   reserva.fecha === reservaTemporal.fecha &&

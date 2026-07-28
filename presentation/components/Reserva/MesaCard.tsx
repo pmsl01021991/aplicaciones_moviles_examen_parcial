@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 
   nombre: {
 
-    color: "#FFF",
+    color: "#111827",
 
     fontSize: 20,
 

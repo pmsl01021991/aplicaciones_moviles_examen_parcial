@@ -110,7 +110,7 @@ export default function DetalleReserva() {
 
         <Text style={styles.value}>
 
-          {reserva.telefono}
+          {reserva.numero}
 
         </Text>
 

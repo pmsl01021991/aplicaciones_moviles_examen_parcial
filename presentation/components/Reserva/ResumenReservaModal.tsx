@@ -1,13 +1,5 @@
 import { Modal, View, Text, StyleSheet, Alert } from "react-native";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import {collection, addDoc, getDocs, query, where, deleteDoc, doc,} from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
@@ -53,6 +45,23 @@ export default function ResumenReservaModal({
   const confirmar = async () => {
 
   try {
+
+    const reservaExistente = query(
+      collection(db, "reservas"),
+      where("mesa", "==", reservaTemporal.mesa),
+      where("fecha", "==", reservaTemporal.fecha),
+      where("hora", "==", reservaTemporal.hora)
+    );
+
+    const resultado = await getDocs(reservaExistente);
+
+    if (!resultado.empty) {
+      Alert.alert(
+        "Horario no disponible",
+        "Esta mesa ya se encuentra reservada para la fecha y hora seleccionadas."
+      );
+      return;
+    }
 
     await addDoc(collection(db, "reservas"), {
 

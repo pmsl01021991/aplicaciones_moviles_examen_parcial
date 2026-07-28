@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebaseConfig";
-import {SafeAreaView,View,Text,StyleSheet, TouchableOpacity, Alert} from "react-native";
+import {SafeAreaView,View,Text,StyleSheet, TouchableOpacity, Alert, RefreshControl} from "react-native";
 import { Calendar } from "react-native-calendars";
 import { useRouter } from "expo-router";
 import { COLORS } from "../presentation/utils/color";
@@ -30,6 +30,7 @@ export default function ReservacionesHechas() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [editarVisible,setEditarVisible]=useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [reservaSeleccionada, setReservaSeleccionada] =
   useState<Reserva | null>(null);
@@ -37,6 +38,16 @@ export default function ReservacionesHechas() {
   useEffect(() => {
       cargarReservas();
     }, []);
+
+    const onRefresh = async () => {
+
+    setRefreshing(true);
+
+    await cargarReservas();
+
+    setRefreshing(false);
+
+  };
 
     const cargarReservas = async () => {
 
@@ -80,94 +91,101 @@ export default function ReservacionesHechas() {
       
 
         <FlatList
-  data={reservasMostrar}
-  keyExtractor={(item) => item.id}
+      data={reservasMostrar}
+      keyExtractor={(item) => item.id}
 
-  ListHeaderComponent={
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
+      }
 
-    <>
+      ListHeaderComponent={
 
-      <View style={styles.content}>
+        <>
 
-        <Text style={styles.subtitle}>
+          <View style={styles.content}>
 
-          Consulta las reservaciones registradas por fecha.
+            <Text style={styles.subtitle}>
 
-        </Text>
+              Consulta las reservaciones registradas por fecha.
 
-        <View style={styles.calendarContainer}>
+            </Text>
 
-          <Calendar
+            <View style={styles.calendarContainer}>
 
-            onDayPress={(day) => {
+              <Calendar
 
-              setFechaSeleccionada(day.dateString);
+                onDayPress={(day) => {
 
-            }}
+                  setFechaSeleccionada(day.dateString);
 
-            markedDates={{
+                }}
 
-              [fechaSeleccionada]: {
+                markedDates={{
 
-                selected: true,
+                  [fechaSeleccionada]: {
 
-                selectedColor: COLORS.secondary,
+                    selected: true,
 
-              },
+                    selectedColor: COLORS.secondary,
 
-            }}
+                  },
 
-            theme={{
+                }}
 
-              todayTextColor: COLORS.secondary,
+                theme={{
 
-              arrowColor: COLORS.secondary,
+                  todayTextColor: COLORS.secondary,
 
-              selectedDayBackgroundColor: COLORS.secondary,
+                  arrowColor: COLORS.secondary,
 
-            }}
+                  selectedDayBackgroundColor: COLORS.secondary,
 
-          />
+                }}
 
-        </View>
+              />
 
-        <Text style={styles.panelTitle}>
+            </View>
 
-          {
+            <Text style={styles.panelTitle}>
 
-            fechaSeleccionada
+              {
 
-              ? `Reservas del ${fechaSeleccionada}`
+                fechaSeleccionada
 
-              : "Todas las reservas"
+                  ? `Reservas del ${fechaSeleccionada}`
 
-          }
+                  : "Todas las reservas"
 
-        </Text>
+              }
 
-      </View>
+            </Text>
 
-    </>
+          </View>
 
-  }
+        </>
 
-  renderItem={({ item }) => (
+      }
 
-    <TouchableOpacity
+      renderItem={({ item }) => (
 
-      style={styles.card}
+        <TouchableOpacity
 
-      activeOpacity={0.8}
+          style={styles.card}
 
-      onPress={() => {
+          activeOpacity={0.8}
 
-          setReservaSeleccionada(item);
+          onPress={() => {
 
-          setModalVisible(true);
+              setReservaSeleccionada(item);
 
-      }}
+              setModalVisible(true);
 
-    >
+          }}
+
+        >
 
       <View style={styles.headerCard}>
 
