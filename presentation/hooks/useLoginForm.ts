@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { validarCorreo } from "../utils/validation";
 
 export default function useLoginForm() {
 
@@ -40,16 +41,9 @@ export default function useLoginForm() {
 
     }
 
-    else if (
-
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)
-
-    ) {
-
+    else if (!validarCorreo(correo)) {
       nuevosErrores.correo = "Correo inválido";
-
       valido = false;
-
     }
 
     if (!password.trim()) {

@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { useRouter } from "expo-router";
 import {SafeAreaView, StyleSheet, View, Text} from "react-native";
-import { StatusBar } from "expo-status-bar";
 import { useUsuario } from "../presentation/context/UsuarioContext";
 import { Ionicons } from "@expo/vector-icons";
-import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import HomeCard from "../presentation/components/shared/HomeCard";
 import { COLORS } from "../presentation/utils/color";
 
@@ -12,11 +9,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const [mostrarLogin, setMostrarLogin] = useState(false);
-
   const {usuarioActual,setUsuarioActual,} = useUsuario();
-
-  const [usuario, setUsuario] = useState(usuarioActual);
 
   return (
 

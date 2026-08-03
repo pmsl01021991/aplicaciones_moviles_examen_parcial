@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EstadoReserva, PrioridadReserva } from "../models/Reserva";
+import { validarTelefono, validarTexto,} from "../utils/validation";
 
 export default function useReservaForm() {
 
@@ -49,7 +50,7 @@ export default function useReservaForm() {
 
     let valido = true;
 
-    if (!cliente.trim()) {
+    if (!validarTexto(cliente)) {
 
       nuevosErrores.cliente =
 
@@ -59,7 +60,7 @@ export default function useReservaForm() {
 
     }
 
-    if (!numero.match(/^9\d{8}$/)) {
+    if (!validarTelefono(numero)) {
 
       nuevosErrores.numero =
 
@@ -69,7 +70,7 @@ export default function useReservaForm() {
 
     }
 
-    if (!mesa.trim()) {
+    if (!validarTexto(mesa)) {
 
       nuevosErrores.mesa =
 
@@ -79,7 +80,7 @@ export default function useReservaForm() {
 
     }
 
-    if (!plato.trim()) {
+    if (!validarTexto(plato)) {
 
       nuevosErrores.plato =
 
