@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, deleteDoc, doc, updateDoc,} from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import {SafeAreaView,View,Text,StyleSheet, TouchableOpacity, Alert, RefreshControl} from "react-native";
 import { Calendar } from "react-native-calendars";

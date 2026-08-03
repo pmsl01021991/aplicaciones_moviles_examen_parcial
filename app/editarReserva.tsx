@@ -21,7 +21,7 @@ export default function EditarReserva() {
     const {
 
         cliente,
-        telefono,
+        numero,
         mesa,
         plato,
         comensales,
@@ -32,7 +32,7 @@ export default function EditarReserva() {
         errors,
 
         setCliente,
-        setTelefono,
+        setNumero,
         setMesa,
         setPlato,
         setComensales,
@@ -49,7 +49,7 @@ export default function EditarReserva() {
 
             setCliente(reserva.cliente);
 
-            setTelefono(reserva.telefono);
+            setNumero(reserva.numero);
 
             setMesa(reserva.mesa);
 
@@ -79,7 +79,7 @@ export default function EditarReserva() {
 
                 cliente,
 
-                telefono,
+                numero,
 
                 mesa,
 
@@ -147,11 +147,11 @@ export default function EditarReserva() {
 
                     label="Teléfono"
 
-                    value={telefono}
+                    value={numero}
 
                     keyboardType="numeric"
 
-                    onChangeText={setTelefono}
+                    onChangeText={setNumero}
 
                     error={errors.telefono}
 
