@@ -3,6 +3,30 @@ import {Modal,View,Text,StyleSheet,TextInput,} from "react-native";
 import PrimaryButton from "../shared/PrimaryButton";
 import { COLORS } from "../../utils/color";
 import { Reserva } from "../../models/Reserva";
+import { Picker } from "@react-native-picker/picker";
+
+const mesas = Array.from(
+  { length: 16 },
+  (_, index) => `Mesa ${index + 1}`
+);
+
+const horas = [
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00",
+  "16:00",
+  "17:00",
+  "18:00",
+  "19:00",
+  "20:00",
+  "21:00",
+  "22:00",
+];
+
+const cantidadComensales = [
+  1, 2, 3, 4, 5, 6, 7, 8
+];
 
 interface Props {
   visible: boolean;
@@ -30,7 +54,7 @@ export default function EditarReservaModal({
   const [mesa,setMesa]=useState("");
   const [fecha,setFecha]=useState("");
   const [hora,setHora]=useState("");
-  const [comensales,setComensales]=useState("");
+  const [comensales,setComensales]=useState(1);
 
   useEffect(()=>{
 
@@ -42,7 +66,7 @@ export default function EditarReservaModal({
       setMesa(reserva.mesa);
       setFecha(reserva.fecha);
       setHora(reserva.hora);
-      setComensales(reserva.comensales.toString());
+      setComensales(reserva.comensales);
 
     }
 
@@ -87,12 +111,20 @@ export default function EditarReservaModal({
             placeholder="Plato"
           />
 
-          <TextInput
-            style={styles.input}
-            value={mesa}
-            onChangeText={setMesa}
-            placeholder="Mesa"
-          />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={mesa}
+              onValueChange={(value) => setMesa(value)}
+            >
+              {mesas.map((item) => (
+                <Picker.Item
+                  key={item}
+                  label={item}
+                  value={item}
+                />
+              ))}
+            </Picker>
+          </View>
 
           <TextInput
             style={styles.input}
@@ -101,20 +133,39 @@ export default function EditarReservaModal({
             placeholder="Fecha"
           />
 
-          <TextInput
-            style={styles.input}
-            value={hora}
-            onChangeText={setHora}
-            placeholder="Hora"
-          />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={hora}
+              onValueChange={(value) => setHora(value)}
+            >
+              {horas.map((item) => (
+                <Picker.Item
+                  key={item}
+                  label={item}
+                  value={item}
+                />
+              ))}
+            </Picker>
+          </View>
 
-          <TextInput
-            style={styles.input}
-            value={comensales}
-            keyboardType="number-pad"
-            onChangeText={setComensales}
-            placeholder="Comensales"
-          />
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={comensales}
+              onValueChange={(value) =>
+                setComensales(Number(value))
+              }
+            >
+              {cantidadComensales.map((cantidad) => (
+                <Picker.Item
+                  key={cantidad}
+                  label={`${cantidad} ${
+                    cantidad === 1 ? "persona" : "personas"
+                  }`}
+                  value={cantidad}
+                />
+              ))}
+            </Picker>
+          </View>
 
           <PrimaryButton
 
@@ -138,7 +189,7 @@ export default function EditarReservaModal({
 
                 hora,
 
-                comensales:Number(comensales)
+                comensales
 
               });
 
@@ -170,34 +221,41 @@ export default function EditarReservaModal({
 
 const styles=StyleSheet.create({
 
-overlay:{
-flex:1,
-justifyContent:"center",
-alignItems:"center",
-backgroundColor:"rgba(0,0,0,.6)",
-padding:20,
-},
+    overlay:{
+      flex:1,
+      justifyContent:"center",
+      alignItems:"center",
+      backgroundColor:"rgba(0,0,0,.6)",
+      padding:20,
+      },
 
-modal:{
-backgroundColor:"#1F2937",
-width:"100%",
-padding:25,
-borderRadius:15,
-},
+    modal:{
+      backgroundColor:"#1F2937",
+      width:"100%",
+      padding:25,
+      borderRadius:15,
+      },
 
-title:{
-fontSize:25,
-fontWeight:"bold",
-color:COLORS.secondary,
-textAlign:"center",
-marginBottom:20,
-},
+    title:{
+      fontSize:25,
+      fontWeight:"bold",
+      color:COLORS.secondary,
+      textAlign:"center",
+      marginBottom:20,
+      },
 
-input:{
-backgroundColor:"#FFF",
-borderRadius:10,
-padding:12,
-marginBottom:12,
-}
+    input:{
+      backgroundColor:"#FFF",
+      borderRadius:10,
+      padding:12,
+      marginBottom:12,
+      },
+
+    pickerContainer: {
+      backgroundColor: "#FFF",
+      borderRadius: 10,
+      marginBottom: 12,
+      overflow: "hidden",
+    },
 
 });

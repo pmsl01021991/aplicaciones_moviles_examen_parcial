@@ -84,6 +84,34 @@ export const mesasMock: Mesa[] = [
     nombre: "Mesa 12",
     disponible: true,
     reservas: []
+  },
+
+  {
+    id: 13,
+    nombre: "Mesa 13",
+    disponible: true,
+    reservas: []
+  },
+
+  {
+    id: 14,
+    nombre: "Mesa 14",
+    disponible: true,
+    reservas: []
+  },
+
+  {
+    id: 15,
+    nombre: "Mesa 15",
+    disponible: true,
+    reservas: []
+  },
+
+  {
+    id: 16,
+    nombre: "Mesa 16",
+    disponible: true,
+    reservas: []
   }
 
 ];

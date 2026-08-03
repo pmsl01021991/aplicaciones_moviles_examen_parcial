@@ -271,17 +271,34 @@ export default function ReservacionesHechas() {
 
             onPress: async () => {
 
-            await deleteDoc(
-              doc(db, "reservas", reservaSeleccionada.id)
-            );
+              try {
 
-            await cargarReservas();
+                await deleteDoc(
+                  doc(db, "reservas", reservaSeleccionada.id)
+                );
 
-            setModalVisible(false);
+                await cargarReservas();
 
-            setReservaSeleccionada(null);
+                setModalVisible(false);
+                setReservaSeleccionada(null);
 
-          },
+                Alert.alert(
+                  "Reserva eliminada",
+                  "La reservación fue eliminada correctamente."
+                );
+
+              } catch (error) {
+
+                console.log(error);
+
+                Alert.alert(
+                  "Error",
+                  "No se pudo eliminar la reservación."
+                );
+
+              }
+
+            },
 
           },
 
@@ -307,24 +324,41 @@ export default function ReservacionesHechas() {
 
       onGuardar={async (reservaActualizada) => {
 
-        await updateDoc(
-          doc(db, "reservas", reservaActualizada.id),
-          {
-            cliente: reservaActualizada.cliente,
-            numero: reservaActualizada.numero,
-            plato: reservaActualizada.plato,
-            mesa: reservaActualizada.mesa,
-            fecha: reservaActualizada.fecha,
-            hora: reservaActualizada.hora,
-            comensales: reservaActualizada.comensales,
-          }
-        );
+        try {
 
-        await cargarReservas();
+          await updateDoc(
+            doc(db, "reservas", reservaActualizada.id),
+            {
+              cliente: reservaActualizada.cliente,
+              numero: reservaActualizada.numero,
+              plato: reservaActualizada.plato,
+              mesa: reservaActualizada.mesa,
+              fecha: reservaActualizada.fecha,
+              hora: reservaActualizada.hora,
+              comensales: reservaActualizada.comensales,
+            }
+          );
 
-        setEditarVisible(false);
+          await cargarReservas();
 
-        setReservaSeleccionada(null);
+          setEditarVisible(false);
+          setReservaSeleccionada(null);
+
+          Alert.alert(
+            "Dato actualizado",
+            "La reservación fue actualizada correctamente."
+          );
+
+        } catch (error) {
+
+          console.log(error);
+
+          Alert.alert(
+            "Error",
+            "No se pudo actualizar la reservación."
+          );
+
+        }
 
       }}
 
