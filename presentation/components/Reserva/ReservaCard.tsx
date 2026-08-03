@@ -39,7 +39,7 @@ export default function ReservaCard({
       </Text>
 
       <Text style={styles.info}>
-        📞 {reserva.telefono}
+        📞 {reserva.numero}
       </Text>
 
       <Text style={styles.fecha}>

@@ -27,7 +27,7 @@ export default function CrearReserva() {
     errors,
 
     setCliente,
-    setTelefono,
+    setNumero,
     setMesa,
     setPlato,
     setComensales,
@@ -123,15 +123,15 @@ export default function CrearReserva() {
 
           label="Teléfono"
 
-          value={telefono}
+          value={numero}
 
-          onChangeText={setTelefono}
+          onChangeText={setNumero}
 
           keyboardType="numeric"
 
           placeholder="987654321"
 
-          error={errors.telefono}
+          error={errors.numero}
 
         />
 

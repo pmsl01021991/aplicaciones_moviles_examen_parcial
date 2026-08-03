@@ -5,7 +5,7 @@ export default function useReservaForm() {
 
   const [cliente, setCliente] = useState("");
 
-  const [telefono, setTelefono] = useState("");
+  const [numero, setNumero] = useState("");
 
   const [mesa, setMesa] = useState("");
 
@@ -25,7 +25,7 @@ export default function useReservaForm() {
 
     cliente: "",
 
-    telefono: "",
+    numero: "",
 
     mesa: "",
 
@@ -39,7 +39,7 @@ export default function useReservaForm() {
 
       cliente: "",
 
-      telefono: "",
+      numero: "",
 
       mesa: "",
 
@@ -59,9 +59,9 @@ export default function useReservaForm() {
 
     }
 
-    if (!telefono.match(/^9\d{8}$/)) {
+    if (!numero.match(/^9\d{8}$/)) {
 
-      nuevosErrores.telefono =
+      nuevosErrores.numero =
 
         "Número inválido";
 
@@ -99,7 +99,7 @@ export default function useReservaForm() {
 
     cliente,
 
-    telefono,
+    numero,
 
     mesa,
 
@@ -115,7 +115,7 @@ export default function useReservaForm() {
 
     setCliente,
 
-    setTelefono,
+    setNumero,
 
     setMesa,
 

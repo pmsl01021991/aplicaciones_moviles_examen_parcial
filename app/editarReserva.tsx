@@ -153,7 +153,7 @@ export default function EditarReserva() {
 
                     onChangeText={setNumero}
 
-                    error={errors.telefono}
+                    error={errors.numero}
 
                 />
 
