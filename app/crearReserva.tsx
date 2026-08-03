@@ -16,7 +16,7 @@ export default function CrearReserva() {
   const {
 
     cliente,
-    telefono,
+    numero,
     mesa,
     plato,
     comensales,
@@ -50,7 +50,7 @@ export default function CrearReserva() {
 
         cliente,
 
-        telefono,
+        numero,
 
         mesa,
 
