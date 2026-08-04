@@ -34,9 +34,9 @@ La aplicación permite cubrir principalmente los siguientes procesos:
 
 # Integrantes del equipo
 
-* Suyón Lescano Pablo
-* Godoy Palacios Joaquín
-* Muñoz Sharon
+* Suyón Lescano, Pablo
+* Godoy Palacios, Joaquín
+* Muñoz Corales, Sharon 
 
 ---
 
@@ -145,8 +145,8 @@ npm run start
 Una vez iniciado Expo, se puede ejecutar la aplicación mediante:
 
 * Expo Go desde un dispositivo físico.
-* Emulador de Android.
 * Desarrollo local compatible con Expo.
+* Emulador de Android.
 
 En caso de utilizar Android mediante Expo:
 
