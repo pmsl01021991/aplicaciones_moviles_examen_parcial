@@ -530,7 +530,6 @@ Como mejoras futuras se consideran:
 * Continuar optimizando la experiencia de usuario.
 * Realizar pruebas adicionales de los diferentes flujos de la aplicación.
 
----
 
 # Estado actual del proyecto
 
