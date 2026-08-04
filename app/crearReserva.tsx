@@ -7,11 +7,11 @@ import CustomTextInput from "../presentation/components/shared/CustomTextInput";
 import PrimaryButton from "../presentation/components/shared/PrimaryButton";
 import { COLORS } from "../presentation/utils/color";
 
-export default function CrearReserva() {//componente para crear reserva //
+export default function CrearReserva() { //Componente para crear reserva
 
   const router = useRouter();
 
-  const { dispatch } = useReserva();//contexto para mejorarel estado de reserva //
+  const { dispatch } = useReserva(); //Contexto para mejorar el estado de reserva
 
   const {
 
@@ -34,9 +34,9 @@ export default function CrearReserva() {//componente para crear reserva //
 
     validar
 
-  } = useReservaForm();//hook para validar los campos del formulario //
+  } = useReservaForm(); //Hook para validar los campos del formulario
 
-  const guardarReserva = () => {//funcion para guaradar la reserva//
+  const guardarReserva = () => { //Función para guardar la reserva
 
     if (!validar()) return;
 

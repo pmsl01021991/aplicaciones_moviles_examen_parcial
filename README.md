@@ -20,23 +20,23 @@ La aplicación permite cubrir principalmente los siguientes procesos:
 
 * Registro de clientes.
 * Inicio y cierre de sesión.
-* Manejo de roles de Cliente y Administrador.
 * Consulta del menú del restaurante.
 * Selección de platos.
 * Selección de mesas.
 * Registro de reservaciones.
-* Consulta de reservaciones.
 * Edición de reservaciones.
+* Consulta de reservaciones.
 * Eliminación de reservaciones.
 * Consulta de disponibilidad de mesas y horarios.
+* Manejo de roles de cliente y administrador.
 
 ---
 
 # Integrantes del equipo
 
-* Suyón Lescano, Pablo
-* Godoy Palacios, Joaquín
-* Muñoz Corales, Sharon 
+* Suyón Lescano, Pablo Martin
+* Godoy Palacios, Antonio Joaquin
+* Muñoz Corales, Sharon Christie 
 
 ---
 
@@ -81,7 +81,7 @@ Antes de ejecutar el proyecto es necesario contar con:
 * Node.js, preferiblemente una versión LTS.
 * npm.
 * Visual Studio Code u otro editor compatible.
-* Conexión a Internet para acceder a Firebase Firestore.
+* Conexión a internet para acceder a Firebase Firestore.
 
 Para ejecutar la aplicación en Android se puede utilizar:
 
