@@ -25,10 +25,8 @@ export default function EditarReserva() {
         mesa,
         plato,
         comensales,
-
         prioridad,
         estado,
-
         errors,
 
         setCliente,

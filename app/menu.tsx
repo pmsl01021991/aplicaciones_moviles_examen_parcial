@@ -14,11 +14,9 @@ const imagenes: Record<string, any> = {
   "Pizza Margherita": require("../assets/images/pizza.jpeg"),
   "Carne Asada": require("../assets/images/carne.jpeg"),
   "Pollo Asado": require("../assets/images/pollo.jpeg"),
-
   "Coca Cola": require("../assets/images/cocacola.jpg"),
   "Inka Kola": require("../assets/images/incakola.jpg"),
   "Chicha Morada": require("../assets/images/chichamorada.jpg"),
-
   "cheesecake": require("../assets/images/cheesecake.jpg"),
   "Tres Leches": require("../assets/images/tresleches.jpg"),
 };

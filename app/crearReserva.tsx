@@ -20,12 +20,10 @@ export default function CrearReserva() {
     mesa,
     plato,
     comensales,
-
     prioridad,
     estado,
-
     errors,
-
+    
     setCliente,
     setNumero,
     setMesa,
