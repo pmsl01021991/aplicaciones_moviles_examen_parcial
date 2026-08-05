@@ -11,7 +11,7 @@ import { Reserva } from "../presentation/models/Reserva";
 import ReservaDetalleModal from "../presentation/components/Reserva/ReservaDetalleModal";
 import EditarReservaModal from "../presentation/components/Reserva/EditarReservaModal";
 
-export default function ReservacionesHechas() {
+export default function ReservacionesHechas() {//componente para mostaralas reservas hechas //
 
   const router = useRouter();
 
@@ -22,7 +22,7 @@ export default function ReservacionesHechas() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [editarVisible,setEditarVisible]=useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);//estado para controlar la recarga de la lista de reservas //
 
   const [reservaSeleccionada, setReservaSeleccionada] =
   useState<Reserva | null>(null);

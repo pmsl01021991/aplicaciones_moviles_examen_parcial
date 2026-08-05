@@ -39,7 +39,7 @@ export default function EditarReserva() {
 
         validar
 
-    } = useReservaForm();
+    } = useReservaForm(); //Hook para validar los campos del formulario
 
     useEffect(() => {
 
@@ -53,7 +53,7 @@ export default function EditarReserva() {
 
             setPlato(reserva.plato);
 
-            setComensales(reserva.comensales.toString());
+            setComensales(reserva.comensales.toString()); //Convertir a string para mostar en el input
 
             setPrioridad(reserva.prioridad);
 
